@@ -9,7 +9,7 @@ export const siteConfig: SiteConfig = {
 	title: "一叶知秋风",
 
 	// 站点副标题
-	subtitle: "Feng ye",
+	subtitle: "Fengye",
 
 	// 站点 URL
 	site_url: "https://394000.xyz",
@@ -20,7 +20,7 @@ export const siteConfig: SiteConfig = {
 
 	// 站点关键词
 	keywords: [
-		"Feng ye"",
+		"Feng ye",
 		"Fuwari",
 		"Astro",
 		"ACGN",
