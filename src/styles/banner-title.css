@@ -93,18 +93,84 @@
 /* 横幅背景暗层透明度 - 通过配置文件 common.dimOpacity 控制，内联样式覆盖 */
 
 .banner-post-title {
-    font-size: clamp(2rem, 4vw, 3rem);
-    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.65);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: min(88vw, 56rem);
+    padding: 0.08rem 1.35rem 0.18rem;
+    font-size: clamp(2.25rem, 4.8vw, 4.35rem);
+    letter-spacing: -0.04em;
+    line-height: 1.08;
+    background: linear-gradient(100deg, #fff7fb 0%, #ffd1ec 24%, #ffffff 48%, #d9ccff 74%, #ffe8fb 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.8px rgba(255, 255, 255, 0.2);
+    text-shadow:
+        0 5px 18px rgba(20, 12, 38, 0.52),
+        0 0 24px rgba(255, 210, 236, 0.42),
+        0 0 46px rgba(199, 157, 255, 0.3);
+    filter:
+        drop-shadow(0 3px 10px rgba(0, 0, 0, 0.34))
+        drop-shadow(0 0 14px rgba(255, 222, 245, 0.18));
+    overflow-wrap: anywhere;
 }
 
 .banner-page-title {
-    font-size: clamp(2rem, 4vw, 3rem);
-    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.65);
+    position: relative;
+    padding: 0.08rem 1.65rem 0.22rem;
+    font-size: clamp(2.45rem, 5vw, 4.6rem);
+    letter-spacing: -0.035em;
+    background: linear-gradient(100deg, #fff7fb 0%, #ffd4ee 25%, #ffffff 49%, #d9ccff 76%, #ffe8fb 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.85px rgba(255, 255, 255, 0.22);
+    text-shadow:
+        0 5px 18px rgba(20, 12, 38, 0.52),
+        0 0 24px rgba(255, 210, 236, 0.42),
+        0 0 46px rgba(199, 157, 255, 0.3),
+        0 0 74px rgba(255, 183, 224, 0.16);
+    filter:
+        drop-shadow(0 3px 10px rgba(0, 0, 0, 0.34))
+        drop-shadow(0 0 14px rgba(255, 222, 245, 0.18));
     display: inline-flex;
     align-items: center;
     justify-content: center;
     vertical-align: middle;
-    line-height: 1.2;
+    line-height: 1.08;
+}
+
+.banner-page-title::before,
+.banner-page-title::after,
+.banner-post-title::before,
+.banner-post-title::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: clamp(2.4rem, 8vw, 8rem);
+    height: 1px;
+    opacity: 0.72;
+    pointer-events: none;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, transparent, rgba(255, 236, 248, 0.78), rgba(216, 204, 255, 0.5));
+    box-shadow:
+        0 0 10px rgba(255, 214, 238, 0.28),
+        0 0 22px rgba(199, 157, 255, 0.16);
+}
+
+.banner-page-title::before,
+.banner-post-title::before {
+    right: calc(100% - 1.35rem);
+}
+
+.banner-page-title::after,
+.banner-post-title::after {
+    left: calc(100% - 1.35rem);
+    transform: translateY(-50%) scaleX(-1);
 }
 
 /* .banner-page-title-icon {
@@ -115,10 +181,35 @@
   } */
 
 .banner-page-title-text {
-    line-height: 1.2;
+    line-height: 1.08;
     transition: opacity 0.25s ease;
 }
 
 .banner-post-meta-list {
-    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(8px) saturate(1.05);
+    -webkit-backdrop-filter: blur(8px) saturate(1.05);
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.54);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 8px 22px rgba(15, 12, 28, 0.12);
+}
+
+@media (max-width: 1023px) {
+    .banner-page-title,
+    .banner-post-title {
+        font-size: clamp(2rem, 10vw, 3.6rem);
+        padding-inline: 1rem;
+        -webkit-text-stroke-width: 0.55px;
+    }
+
+    .banner-page-title::before,
+    .banner-page-title::after,
+    .banner-post-title::before,
+    .banner-post-title::after {
+        width: clamp(1.2rem, 7vw, 3rem);
+    }
 }

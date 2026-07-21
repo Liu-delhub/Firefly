@@ -12,7 +12,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "Fengye",
 
 	// 站点 URL
-	site_url: "https://394000.xyz",
+	site_url: "https://www.fengye1.top",
 
 	// 站点描述
 	description:
