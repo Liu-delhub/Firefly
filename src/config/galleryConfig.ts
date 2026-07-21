@@ -2,7 +2,16 @@ import type { GalleryConfig } from "@/types/galleryConfig";
 
 // 相册配置
 export const galleryConfig: GalleryConfig = {
+	// 自动扫描相册文件夹
+	// 开启后，public/gallery 里的每个子文件夹都会自动成为一本相册
+	// 如果子文件夹里有 album.json，会优先读取 album.json 里的相册名称、日期、地点、标签等信息
+	autoScan: {
+		enable: true,
+		folder: "/gallery",
+	},
+
 	// 相册列表
+	// 这里可以手动补充或覆盖自动扫描到的相册信息；id 必须和 public/gallery 下的文件夹名一致
 	albums: [
 		// 支持jpg/png/webp/avif/gif格式
 		// id: 相册唯一标识符（用于目录命名和URL路径），比如设置：id: "firefly-2026", 对应 public/gallery/firefly-2026/目录

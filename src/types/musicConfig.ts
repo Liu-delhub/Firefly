@@ -6,6 +6,9 @@ export type MusicPlayerConfig = {
 	// 默认音量 (0-1)
 	volume?: number;
 
+	// 是否进入网站后自动播放音乐
+	autoPlay?: boolean;
+
 	// 播放模式：'list'=列表循环, 'one'=单曲循环, 'random'=随机播放
 	playMode?: "list" | "one" | "random";
 
@@ -41,6 +44,19 @@ export type MusicPlayerConfig = {
 
 	// 本地音乐配置（当 mode 为 'local' 时使用）
 	local?: {
+		// 自动扫描 public 里的音乐文件夹
+		autoScan?: {
+			// 是否启用自动扫描
+			enable?: boolean;
+			// 要扫描的公开目录，例如 "/assets/music/auto"
+			folder?: string;
+			// 封面目录，默认使用 `${folder}/cover`
+			coverFolder?: string;
+			// 歌词目录，默认使用 `${folder}/lrc`
+			lrcFolder?: string;
+		};
+
+		// 手动音乐列表；启用 autoScan 时，这里可以留空，也可以继续手动补充特殊歌曲
 		playlist?: Array<{
 			name: string; // 歌曲名称
 			artist: string; // 艺术家

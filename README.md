@@ -1,9 +1,9 @@
 
-<img src="./docs/images/1131.png" width = "350" height = "500" alt="Firefly" align=right />
+<img src="./docs/images/1131.png" width = "350" height = "500" alt="Feng Ye" align=right />
 
 <div align="center">
 
-# 流萤 / Firefly 
+# 流萤 / Feng Ye 
 > 一款清新美观的 Astro 静态博客主题模板
 > 
 > ![Node.js >= 22](https://img.shields.io/badge/node.js-%3E%3D22-brightgreen) 
@@ -60,21 +60,21 @@
 
 >[!TIP]
 >
->Firefly 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。
+>Feng Ye 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。
 > 
->在重要的布局上，Firefly 创新性地增加了左右双侧边栏、文章网格(多列)布局、瀑布流布局。
+>在重要的布局上，Feng Ye 创新性地增加了左右双侧边栏、文章网格(多列)布局、瀑布流布局。
 >
 >增加了站点统计、日历、文章目录、音乐播放器、快捷分类导航等小组件，让侧边栏和整体页面布局更加丰富。
 >
 >同时也增加了分享海报、相关文章推荐、随机文章等组件，让文章页面内容更丰富。
 >
->**如果你参考或使用了 Firefly 以上组件设计和相关代码，请注明来自 Firefly。**
+>**如果你参考或使用了 Feng Ye 以上组件设计和相关代码，请注明来自 Feng Ye。**
 >
->Firefly 也保留了原版 fuwari 的布局，可根据自己的喜好在配置文件中自由切换。
+>Feng Ye 也保留了原版 fuwari 的布局，可根据自己的喜好在配置文件中自由切换。
 >
->**更多布局配置及演示请查看：[Firefly 布局系统详解](https://firefly.cuteleaf.cn/posts/firefly-layout-system/)**
+>**更多布局配置及演示请查看：[Feng Ye 布局系统详解](https://firefly.cuteleaf.cn/posts/firefly-layout-system/)**
 >
->Firefly 支持 i18n 多语言 UI，但除了简体中文，其他语言均为 AI 翻译转换，如有错误，欢迎提交 [Pull Request](https://github.com/CuteLeaf/Firefly/pulls) 修正。
+>Feng Ye 支持 i18n 多语言 UI，但除了简体中文，其他语言均为 AI 翻译转换，如有错误，欢迎提交 [Pull Request](https://github.com/CuteLeaf/Firefly/pulls) 修正。
 
 ## ✨ 功能特性
 
@@ -159,7 +159,7 @@ Cloudflare Workers 部署：[【不用服务器，无需备案，零成本搭建
 
 ## 📖 配置说明
 
-> 📚 **详细配置文档**: 查看 [Firefly 使用文档](https://docs-firefly.cuteleaf.cn/) 获取完整的配置指南
+> 📚 **详细配置文档**: 查看 [Feng Ye 使用文档](https://docs-firefly.cuteleaf.cn/) 获取完整的配置指南
 
 ### 设置网站语言
 
@@ -271,7 +271,7 @@ published: 2026-07-15 16:15:29
 
 ## 🙏 致谢
 
-非常感谢 [saicaca](https://github.com/saicaca) 开发的 [fuwari](https://github.com/saicaca/fuwari) 模板，Firefly 就是基于这个模板二次开发
+非常感谢 [saicaca](https://github.com/saicaca) 开发的 [fuwari](https://github.com/saicaca/fuwari) 模板，Feng Ye 就是基于这个模板二次开发
 
 流萤部分相关图片素材版权归游戏 [《崩坏：星穹铁道》](https://sr.mihoyo.com/) 开发商 [米哈游](https://www.mihoyo.com/) 所有
 
@@ -300,7 +300,7 @@ published: 2026-07-15 16:15:29
 
 **版权声明：**
 - Copyright (c) 2024 [saicaca](https://github.com/saicaca) - [fuwari](https://github.com/saicaca/fuwari)
-- Copyright (c) 2025 [CuteLeaf](https://github.com/CuteLeaf) - [Firefly](https://github.com/CuteLeaf/Firefly) 
+- Copyright (c) 2025 [CuteLeaf](https://github.com/CuteLeaf) - [Feng Ye](https://github.com/CuteLeaf/Firefly) 
 
 根据 MIT 开源协议，你可以自由使用、修改、分发代码，但需保留上述版权声明。
 

@@ -55,9 +55,9 @@ const widgetId =
                 </h3>
             </div>
             <!-- Top Right: Lyric Toggle -->
-            <button class={`btn-lrc-toggle hover:text-(--primary) transition-all duration-300 p-0.5 pr-2 transform active:scale-95 text-neutral-400 shrink-0 ${!config.showLyrics ? 'hidden' : ''}`} title={i18n(I18nKey.musicLyrics)} aria-label={i18n(I18nKey.musicLyrics)}>
-                <Icon is:inline name="material-symbols:subtitles-off-outline-rounded" class="icon-lrc-off text-xl" aria-hidden="true" />
-                <Icon is:inline name="material-symbols:subtitles-outline-rounded" class="icon-lrc-on text-xl hidden" aria-hidden="true" />
+            <button class={`btn-lrc-toggle hover:text-(--primary) transition-all duration-300 p-0.5 pr-2 transform active:scale-95 shrink-0 ${config.showLyrics ? 'text-(--primary)' : 'hidden text-neutral-400'}`} title={i18n(I18nKey.musicLyrics)} aria-label={i18n(I18nKey.musicLyrics)}>
+                <Icon is:inline name="material-symbols:subtitles-off-outline-rounded" class={`icon-lrc-off text-xl ${config.showLyrics ? 'hidden' : ''}`} aria-hidden="true" />
+                <Icon is:inline name="material-symbols:subtitles-outline-rounded" class={`icon-lrc-on text-xl ${config.showLyrics ? '' : 'hidden'}`} aria-hidden="true" />
             </button>
         </div>
 
@@ -82,8 +82,8 @@ const widgetId =
                     <Icon is:inline name="material-symbols:volume-off-rounded" class="icon-vol-mute text-lg hidden" aria-hidden="true" />
                 </button>
                 <div class="w-16 transition-all duration-300 ease-out flex items-center">
-                    <div class="vol-container h-1 w-16 bg-neutral-300/50 dark:bg-neutral-500/40 rounded-full cursor-pointer relative ml-1" role="slider" aria-label={i18n(I18nKey.musicVolume)} aria-valuemin="0" aria-valuemax="100" aria-valuenow="70">
-                        <div class="vol-bar absolute left-0 top-0 h-full bg-(--primary) rounded-full w-[70%]"></div>
+                    <div class="vol-container h-1 w-16 bg-neutral-300/50 dark:bg-neutral-500/40 rounded-full cursor-pointer relative ml-1" role="slider" aria-label={i18n(I18nKey.musicVolume)} aria-valuemin="0" aria-valuemax="100" aria-valuenow="20">
+                        <div class="vol-bar absolute left-0 top-0 h-full bg-(--primary) rounded-full w-[20%]"></div>
                     </div>
                 </div>
             </div>
@@ -132,7 +132,7 @@ const widgetId =
 </div>
 
 <!-- Lyrics Drawer -->
-<div class="lrc-drawer grid transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] grid-rows-[0fr] opacity-0">
+<div class={`lrc-drawer grid transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${config.showLyrics ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
     <div class="overflow-hidden min-h-0">
         <div class="mt-2 pt-2 border-t border-neutral-100 dark:border-white/5 mx-1">
             <div class="lrc-container h-48 overflow-y-auto custom-scrollbar flex flex-col items-center gap-2 p-4 py-24 text-center relative scroll-smooth" role="listbox" aria-label={i18n(I18nKey.musicLyrics)}>
@@ -234,6 +234,16 @@ const widgetId =
         ui.progressContainer, ui.btnNext, ui.btnPrev, ui.loading,
         ui.cover, ui.title, ui.artist, ui.playlistContainer, ui.itemTemplate];
     if (_critical.some(function(el) { return !el; })) return;
+
+    if (cfg.showLyrics) {
+        ui.lrcDrawer.style.gridTemplateRows = '1fr';
+        ui.lrcDrawer.classList.add('opacity-100');
+        ui.lrcDrawer.classList.remove('opacity-0');
+        ui.btnLrc.classList.add('text-(--primary)');
+        ui.btnLrc.classList.remove('text-neutral-400');
+        ui.iconLrcOn.classList.remove('hidden');
+        ui.iconLrcOff.classList.add('hidden');
+    }
 
     // ── Local state (drawers, user scrolling, virtual scroll) ──
     var ITEM_H = 42;

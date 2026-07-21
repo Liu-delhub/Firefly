@@ -1,4 +1,9 @@
 ---
+// 文章详情页路由
+// 每个 src/content/posts 里的 Markdown 文件，最终都会通过这个页面渲染成文章详情页。
+// 如果你要改“文章打开后的布局、封面、版权、评论、相关推荐”，可以看这个文件。
+// 如果只是写文章或删文章，不需要改这里，直接改 src/content/posts 里的 .md 文件即可。
+
 import { render } from "astro:content";
 import * as path from "node:path";
 import Comment from "@components/comment/index.astro";
@@ -34,7 +39,7 @@ import { url } from "@/utils/url-utils";
 export async function getStaticPaths() {
 	const blogEntries = await getSortedPosts();
 	return blogEntries.map((entry) => {
-		// 将 id 转换为 slug（移除扩展名）以匹配路由参数
+		// 将文章 id 转换为网址 slug（移除 .md / .mdx 扩展名），用于生成 /posts/xxx 网址
 		const slug = removeFileExtension(entry.id);
 		return {
 			params: { slug },

@@ -44,7 +44,7 @@ export const sponsorConfig: SponsorConfig = {
 			icon: "simple-icons:kofi",
 			qrCode: "",
 			link: "https://ko-fi.com/cuteleaf",
-			description: "Buy a Coffee for Firefly",
+			description: "Buy a Coffee for Feng Ye",
 			enabled: true,
 		},
 		{
@@ -61,19 +61,19 @@ export const sponsorConfig: SponsorConfig = {
 	sponsors: [
 		// 示例：已实名打赏者
 		{
-			name: "夏叶",
+			name: "",
 			avatar:
-				"https://weavatar.com/avatar/d252655d40d6874417a720bad0a6c5f77f8f6a1fd2f882f8f338402dc37e4190?s=640",
-			amount: "¥50",
-			date: "2025-10-01",
+				"",
+			amount: "",
+			date: "",
 		},
 
 		// 示例：匿名打赏者
 		{
-			name: "匿名用户",
+			name: "",
 			// avatar: "",
-			amount: "¥20",
-			date: "2025-10-01",
+			amount: "",
+			date: "",
 		},
 	],
 };

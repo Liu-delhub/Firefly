@@ -33,11 +33,175 @@
  * 适用: 所有模式，所有设备
  * ============================================ */
 #navbar>div {
-    background-color: var(--card-bg);
-    border: 1px solid transparent;
-    border-radius: 0 0 0.75rem 0.75rem;
-    backdrop-filter: blur(0);
+    position: relative;
+    overflow: hidden;
+    width: min(calc(100% - 2rem), var(--page-width));
+    margin: 0.75rem auto 0;
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1.6rem;
+    backdrop-filter: blur(18px) saturate(1.08);
+    -webkit-backdrop-filter: blur(18px) saturate(1.08);
+    box-shadow:
+        0 12px 34px rgba(15, 12, 28, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.24);
     @apply navbar-surface-transition;
+}
+
+#navbar>div::before,
+#navbar>div::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+}
+
+#navbar>div::before {
+    inset: 0;
+    border-radius: inherit;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 52%),
+        linear-gradient(115deg, transparent 18%, rgba(255, 255, 255, 0.18) 42%, transparent 62%);
+    opacity: 0.36;
+    transform: translateX(-28%);
+    transition:
+        opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#navbar>div::after {
+    left: 1rem;
+    right: 1rem;
+    top: 0.45rem;
+    height: 1px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+}
+
+#navbar:hover>div::before {
+    opacity: 0.58;
+    transform: translateX(28%);
+}
+
+#navbar>div>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* Apple 风格磨砂玻璃：导航按钮和选中胶囊 */
+#navbar .btn-plain {
+    position: relative;
+    overflow: hidden;
+    border-radius: 999px !important;
+    border: 1px solid transparent;
+    background: transparent;
+    transition:
+        background-color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+        color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#navbar .btn-plain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 58%),
+        linear-gradient(115deg, transparent 12%, rgba(255, 255, 255, 0.42) 42%, transparent 62%);
+    opacity: 0;
+    transform: translateX(-120%);
+    transition:
+        opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#navbar .btn-plain:hover,
+#navbar .btn-plain:focus-visible,
+#navbar .dropdown-container:hover > .dropdown-trigger,
+#navbar .dropdown-container:focus-within > .dropdown-trigger,
+#navbar .dropdown-trigger[aria-expanded="true"] {
+    background: rgba(255, 255, 255, 0.16) !important;
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow:
+        0 8px 24px rgba(15, 12, 28, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.44),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px) saturate(1.15);
+    -webkit-backdrop-filter: blur(10px) saturate(1.15);
+}
+
+#navbar .btn-plain:hover::before,
+#navbar .btn-plain:focus-visible::before,
+#navbar .dropdown-container:hover > .dropdown-trigger::before,
+#navbar .dropdown-container:focus-within > .dropdown-trigger::before,
+#navbar .dropdown-trigger[aria-expanded="true"]::before {
+    opacity: 1;
+    transform: translateX(120%);
+}
+
+#navbar .btn-plain:active {
+    background: rgba(255, 255, 255, 0.22) !important;
+    transform: scale(0.97);
+}
+
+:root.dark #navbar .btn-plain:hover,
+:root.dark #navbar .btn-plain:focus-visible,
+:root.dark #navbar .dropdown-container:hover > .dropdown-trigger,
+:root.dark #navbar .dropdown-container:focus-within > .dropdown-trigger,
+:root.dark #navbar .dropdown-trigger[aria-expanded="true"] {
+    background: rgba(255, 255, 255, 0.09) !important;
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+}
+
+#nav-menu-panel a,
+#nav-menu-panel button {
+    border-radius: 999px !important;
+    border: 1px solid transparent;
+}
+
+#nav-menu-panel a:hover,
+#nav-menu-panel button:hover,
+#nav-menu-panel .mobile-dropdown[data-expanded="true"] > button {
+    background: rgba(255, 255, 255, 0.14) !important;
+    border-color: rgba(255, 255, 255, 0.24);
+    box-shadow:
+        0 8px 22px rgba(15, 12, 28, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.36);
+    backdrop-filter: blur(10px) saturate(1.12);
+    -webkit-backdrop-filter: blur(10px) saturate(1.12);
+}
+
+:root.dark #nav-menu-panel a:hover,
+:root.dark #nav-menu-panel button:hover,
+:root.dark #nav-menu-panel .mobile-dropdown[data-expanded="true"] > button {
+    background: rgba(255, 255, 255, 0.09) !important;
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+:root.dark #navbar>div {
+    background: rgba(20, 20, 24, 0.055);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow:
+        0 12px 34px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+:root.dark #navbar>div::before {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 52%),
+        linear-gradient(115deg, transparent 18%, rgba(255, 255, 255, 0.12) 42%, transparent 62%);
+    opacity: 0.4;
 }
 
 
@@ -66,10 +230,14 @@ body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"]:not(.scro
     /* "semi" */
     #wallpaper-wrapper~* #navbar[data-transparent-mode="semi"]>div,
     body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semi"]>div {
-        backdrop-filter: blur(var(--navbar-glass-blur, 20px)) !important;
-        background: color-mix(in oklch, var(--card-bg) calc(var(--opacity-55) * 100%), transparent) !important;
-        border-radius: 0 0 0.75rem 0.75rem !important;
-        box-shadow: var(--shadow-navbar) !important;
+        backdrop-filter: blur(18px) saturate(1.08) !important;
+        -webkit-backdrop-filter: blur(18px) saturate(1.08) !important;
+        background: rgba(255, 255, 255, 0.055) !important;
+        border: 1px solid rgba(255, 255, 255, 0.24) !important;
+        border-radius: 1.6rem !important;
+        box-shadow:
+            0 12px 34px rgba(15, 12, 28, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.24) !important;
     }
 
     /* "full" */
@@ -88,17 +256,21 @@ body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"]:not(.scro
         backdrop-filter: blur(0) !important;
         background: transparent !important;
         border: none !important;
-        border-radius: 0 0 0.75rem 0.75rem !important;
+        border-radius: 1.35rem !important;
         box-shadow: none !important;
     }
 
     /* "semifull" (scrolled) */
     #wallpaper-wrapper~* #navbar[data-transparent-mode="semifull"].scrolled>div,
     body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"].scrolled>div {
-        backdrop-filter: blur(var(--navbar-glass-blur, 20px)) !important;
-        background: color-mix(in oklch, var(--card-bg) calc(var(--opacity-55) * 100%), transparent) !important;
-        border-radius: 0 0 0.75rem 0.75rem !important;
-        box-shadow: var(--shadow-navbar) !important;
+        backdrop-filter: blur(18px) saturate(1.08) !important;
+        -webkit-backdrop-filter: blur(18px) saturate(1.08) !important;
+        background: rgba(255, 255, 255, 0.055) !important;
+        border: 1px solid rgba(255, 255, 255, 0.24) !important;
+        border-radius: 1.6rem !important;
+        box-shadow:
+            0 12px 34px rgba(15, 12, 28, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.24) !important;
     }
 }
 
@@ -111,10 +283,14 @@ body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"]:not(.scro
     /* "semi" */
     #wallpaper-wrapper~* #navbar[data-transparent-mode="semi"][data-is-home="true"]>div,
     body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semi"][data-is-home="true"]>div {
-        backdrop-filter: blur(var(--navbar-glass-blur, 20px)) !important;
-        background: color-mix(in oklch, var(--card-bg) calc(var(--opacity-55) * 100%), transparent) !important;
-        border-radius: 0 0 0.75rem 0.75rem !important;
-        box-shadow: var(--shadow-navbar) !important;
+        backdrop-filter: blur(14px) saturate(1.06) !important;
+        -webkit-backdrop-filter: blur(14px) saturate(1.06) !important;
+        background: rgba(255, 255, 255, 0.055) !important;
+        border: 1px solid rgba(255, 255, 255, 0.22) !important;
+        border-radius: 1.25rem !important;
+        box-shadow:
+            0 14px 36px rgba(15, 12, 28, 0.16),
+            inset 0 1px 1px rgba(255, 255, 255, 0.45) !important;
     }
 
     /* "full" */
@@ -133,17 +309,21 @@ body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"]:not(.scro
         backdrop-filter: blur(0) !important;
         background: transparent !important;
         border: none !important;
-        border-radius: 0 0 0.75rem 0.75rem !important;
+        border-radius: 1.1rem !important;
         box-shadow: none !important;
     }
 
     /* "semifull" (scrolled) */
     #wallpaper-wrapper~* #navbar[data-transparent-mode="semifull"][data-is-home="true"].scrolled>div,
     body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"][data-is-home="true"].scrolled>div {
-        backdrop-filter: blur(var(--navbar-glass-blur, 20px)) !important;
-        background: color-mix(in oklch, var(--card-bg) calc(var(--opacity-55) * 100%), transparent) !important;
-        border-radius: 0 0 0.75rem 0.75rem !important;
-        box-shadow: var(--shadow-navbar) !important;
+        backdrop-filter: blur(14px) saturate(1.06) !important;
+        -webkit-backdrop-filter: blur(14px) saturate(1.06) !important;
+        background: rgba(255, 255, 255, 0.055) !important;
+        border: 1px solid rgba(255, 255, 255, 0.22) !important;
+        border-radius: 1.25rem !important;
+        box-shadow:
+            0 14px 36px rgba(15, 12, 28, 0.16),
+            inset 0 1px 1px rgba(255, 255, 255, 0.45) !important;
     }
 }
 
@@ -155,8 +335,11 @@ body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"]:not(.scro
     /* "semi" */
     :root.dark #wallpaper-wrapper~* #navbar[data-transparent-mode="semi"]>div,
     :root.dark body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semi"]>div {
-        background: color-mix(in oklch, var(--card-bg) calc(var(--opacity-55) * 100%), transparent) !important;
-        box-shadow: var(--shadow-navbar-dark) !important;
+        background: rgba(20, 20, 24, 0.055) !important;
+        border-color: rgba(255, 255, 255, 0.16) !important;
+        box-shadow:
+            0 12px 34px rgba(0, 0, 0, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
     }
 
     /* "full" */
@@ -178,8 +361,11 @@ body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"]:not(.scro
     /* "semifull" (scrolled) */
     :root.dark #wallpaper-wrapper~* #navbar[data-transparent-mode="semifull"].scrolled>div,
     :root.dark body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"].scrolled>div {
-        background: color-mix(in oklch, var(--card-bg) calc(var(--opacity-55) * 100%), transparent) !important;
-        box-shadow: var(--shadow-navbar-dark) !important;
+        background: rgba(20, 20, 24, 0.055) !important;
+        border-color: rgba(255, 255, 255, 0.16) !important;
+        box-shadow:
+            0 12px 34px rgba(0, 0, 0, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
     }
 }
 
@@ -191,8 +377,11 @@ body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"]:not(.scro
     /* "semi" */
     :root.dark #wallpaper-wrapper~* #navbar[data-transparent-mode="semi"][data-is-home="true"]>div,
     :root.dark body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semi"][data-is-home="true"]>div {
-        background: color-mix(in oklch, var(--card-bg) calc(var(--opacity-55) * 100%), transparent) !important;
-        box-shadow: var(--shadow-navbar-dark) !important;
+        background: rgba(20, 20, 24, 0.055) !important;
+        border-color: rgba(255, 255, 255, 0.16) !important;
+        box-shadow:
+            0 12px 34px rgba(0, 0, 0, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
     }
 
     /* "full" */
@@ -214,17 +403,22 @@ body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"]:not(.scro
     /* "semifull" (scrolled) */
     :root.dark #wallpaper-wrapper~* #navbar[data-transparent-mode="semifull"][data-is-home="true"].scrolled>div,
     :root.dark body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"][data-is-home="true"].scrolled>div {
-        background: color-mix(in oklch, var(--card-bg) calc(var(--opacity-55) * 100%), transparent) !important;
-        box-shadow: var(--shadow-navbar-dark) !important;
+        background: rgba(20, 20, 24, 0.055) !important;
+        border-color: rgba(255, 255, 255, 0.16) !important;
+        box-shadow:
+            0 12px 34px rgba(0, 0, 0, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
     }
 }
 
 /* ============================================
- * 移动端去掉底部圆角
+ * 移动端悬浮圆角导航栏
  * ============================================ */
 @media (max-width: 767px) {
     #navbar>div {
-        border-radius: 0 !important;
+        width: calc(100% - 1rem);
+        margin-top: 0.5rem;
+        border-radius: 1.1rem !important;
     }
 
     /* 覆盖 banner 模式 semi / semifull 下的圆角 */
@@ -234,7 +428,7 @@ body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"]:not(.scro
     body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"][data-is-home="true"]>div,
     #wallpaper-wrapper~* #navbar[data-transparent-mode="semifull"][data-is-home="true"].scrolled>div,
     body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"][data-is-home="true"].scrolled>div {
-        border-radius: 0 !important;
+        border-radius: 1.1rem !important;
     }
 }
 
@@ -277,9 +471,14 @@ body:has(#wallpaper-wrapper) .dropdown-content,
 body:has(#wallpaper-wrapper) .float-panel,
 body.wallpaper-transparent .dropdown-content,
 body.wallpaper-transparent .float-panel {
-    background: rgba(255, 255, 255, 0.95) !important;
-    box-shadow: var(--shadow-md) !important;
-    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    background: rgba(255, 255, 255, 0.18) !important;
+    backdrop-filter: blur(30px) saturate(1.25);
+    -webkit-backdrop-filter: blur(30px) saturate(1.25);
+    box-shadow:
+        0 18px 42px rgba(15, 12, 28, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.32) !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+    border-radius: 1.25rem !important;
 }
 
 /* 暗色主题 */
@@ -289,9 +488,14 @@ body.wallpaper-transparent .float-panel {
 :root.dark body:has(#wallpaper-wrapper) .float-panel,
 :root.dark body.wallpaper-transparent .dropdown-content,
 :root.dark body.wallpaper-transparent .float-panel {
-    background: rgba(23, 23, 23, 0.95) !important;
-    box-shadow: var(--shadow-md) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: rgba(20, 20, 24, 0.24) !important;
+    backdrop-filter: blur(30px) saturate(1.2);
+    -webkit-backdrop-filter: blur(30px) saturate(1.2);
+    box-shadow:
+        0 18px 42px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    border-radius: 1.25rem !important;
 }
 
 /* ============================================

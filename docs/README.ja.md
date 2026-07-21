@@ -1,9 +1,9 @@
 
-<img src="./images/1131.png" width = "350" height = "500" alt="Firefly" align=right />
+<img src="./images/1131.png" width = "350" height = "500" alt="Feng Ye" align=right />
 
 <div align="center">
 
-# Firefly
+# Feng Ye
 > 美しくモダンな Astro 静的ブログテーマテンプレート
 > 
 > ![Node.js >= 22](https://img.shields.io/badge/node.js-%3E%3D22-brightgreen) 
@@ -60,21 +60,21 @@
 
 >[!TIP]
 >
->Firefly は、Astro フレームワークと Fuwari テンプレートをベースに開発された、清新で美しくモダンな個人ブログテーマテンプレートです。技術愛好家やコンテンツクリエイター向けに設計されており、モダンな Web 技術スタックを統合し、豊富な機能モジュールと高いカスタマイズ性を備えたインターフェースで、プロフェッショナルで美しい個人ブログを手軽に構築できます。
+>Feng Ye は、Astro フレームワークと Fuwari テンプレートをベースに開発された、清新で美しくモダンな個人ブログテーマテンプレートです。技術愛好家やコンテンツクリエイター向けに設計されており、モダンな Web 技術スタックを統合し、豊富な機能モジュールと高いカスタマイズ性を備えたインターフェースで、プロフェッショナルで美しい個人ブログを手軽に構築できます。
 >
->主要なレイアウト面では、Firefly は左右のデュアルサイドバー、記事グリッド（多カラム）レイアウト、メイソンリーレイアウトを革新的に追加しています。
+>主要なレイアウト面では、Feng Ye は左右のデュアルサイドバー、記事グリッド（多カラム）レイアウト、メイソンリーレイアウトを革新的に追加しています。
 >
 >さらに、サイト統計、カレンダー、目次、音楽プレーヤー、クイックカテゴリーナビゲーションなどのウィジェットを追加し、サイドバーとページ全体のレイアウトをより豊かにしています。
 >
 >同時に、共有ポスター、関連記事のおすすめ、ランダム記事などのコンポーネントも追加し、記事ページの内容をさらに充実させています。
 >
->**Firefly の上記コンポーネント設計や関連コードを参考または利用する場合は、出典として Firefly を明記してください。**
+>**Feng Ye の上記コンポーネント設計や関連コードを参考または利用する場合は、出典として Feng Ye を明記してください。**
 >
->Firefly はオリジナルの fuwari レイアウトも保持しており、設定ファイルで好みに応じて自由に切り替えられます。
+>Feng Ye はオリジナルの fuwari レイアウトも保持しており、設定ファイルで好みに応じて自由に切り替えられます。
 >
->**レイアウト設定とデモの詳細については、[Firefly レイアウトシステム詳解](https://firefly.cuteleaf.cn/posts/firefly-layout-system/)をご覧ください**
+>**レイアウト設定とデモの詳細については、[Feng Ye レイアウトシステム詳解](https://firefly.cuteleaf.cn/posts/firefly-layout-system/)をご覧ください**
 >
->Firefly は i18n の多言語 UI をサポートしていますが、簡体字中国語以外の言語は AI 翻訳です。誤りがある場合は、[Pull Request](https://github.com/CuteLeaf/Firefly/pulls) の提出を歓迎します。
+>Feng Ye は i18n の多言語 UI をサポートしていますが、簡体字中国語以外の言語は AI 翻訳です。誤りがある場合は、[Pull Request](https://github.com/CuteLeaf/Firefly/pulls) の提出を歓迎します。
 
 ## ✨ 機能
 
@@ -157,7 +157,7 @@
 
 ## 📖 設定説明
 
-> 📚 **詳細な設定ドキュメント**：[Fireflyドキュメント](https://docs-firefly.cuteleaf.cn/)で完全な設定ガイドを確認してください
+> 📚 **詳細な設定ドキュメント**：[Feng Yeドキュメント](https://docs-firefly.cuteleaf.cn/)で完全な設定ガイドを確認してください
 
 ### ウェブサイトの言語設定
 
@@ -269,7 +269,7 @@ Astro がデフォルトで対応している[GitHub Flavored Markdown](https://
 
 ## 🙏 謝辞
 
-[fuwari](https://github.com/saicaca/fuwari) テンプレートを開発した[saicaca](https://github.com/saicaca)に深く感謝します。Firefly はこのテンプレートをベースに二次開発されています。
+[fuwari](https://github.com/saicaca/fuwari) テンプレートを開発した[saicaca](https://github.com/saicaca)に深く感謝します。Feng Ye はこのテンプレートをベースに二次開発されています。
 
 蛍関連の画像素材の著作権はゲーム[「崩壊：スターレイル」](https://sr.mihoyo.com/)の開発元 [miHoYo](https://www.mihoyo.com/) に帰属します。
 
@@ -298,7 +298,7 @@ Astro がデフォルトで対応している[GitHub Flavored Markdown](https://
 
 **著作権表示：**
 - Copyright (c) 2024 [saicaca](https://github.com/saicaca) - [fuwari](https://github.com/saicaca/fuwari)
-- Copyright (c) 2025 [CuteLeaf](https://github.com/CuteLeaf) - [Firefly](https://github.com/CuteLeaf/Firefly)
+- Copyright (c) 2025 [CuteLeaf](https://github.com/CuteLeaf) - [Feng Ye](https://github.com/CuteLeaf/Firefly)
 
 MIT ライセンスに基づき、コードの自由な使用、変更、配布が許可されていますが、上記の著作権表示を保持する必要があります。
 

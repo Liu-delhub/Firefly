@@ -1,16 +1,18 @@
 import type { SakuraConfig } from "../types/effectsConfig";
 
 // 特效配置 - 集中管理所有动画特效
+// 目前这里主要控制樱花特效。
+// 如果觉得页面卡顿，可以降低 sakuraNum，或者把 enable 改成 false。
 
 export const sakuraConfig: SakuraConfig = {
 	// 是否启用樱花特效
-	enable: false,
+	enable: true,
 
 	// 是否允许用户在设置中切换
 	switchable: true,
 
 	// 樱花数量
-	sakuraNum: 21,
+	sakuraNum: 100,
 
 	// 樱花越界限制次数，-1为无限循环
 	limitTimes: -1,
@@ -36,7 +38,7 @@ export const sakuraConfig: SakuraConfig = {
 		// 水平移动
 		horizontal: {
 			// 水平移动速度最小值
-			min: -1.7,
+			min: -1,
 			// 水平移动速度最大值
 			max: -1.2,
 		},

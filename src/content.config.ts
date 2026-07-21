@@ -2,6 +2,11 @@ import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
+// Astro 内容集合配置
+// 这里定义哪些 Markdown 文件会被当成文章、特殊页面或动态内容读取。
+// 如果以后新增文章字段，比如自定义作者、封面描述等，需要同时在这里给 schema 增加对应字段。
+
+// 博客文章集合：读取 src/content/posts 里的 .md / .mdx 文件
 const postsCollection = defineCollection({
 	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/posts" }),
 	schema: z.object({
@@ -31,11 +36,13 @@ const postsCollection = defineCollection({
 	}),
 });
 
+// 特殊页面集合：读取 src/content/spec，例如 about / friends / guestbook
 const specCollection = defineCollection({
 	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/spec" }),
 	schema: z.object({}),
 });
 
+// 动态集合：读取 src/content/dynamic，用于类似说说/动态的内容
 const dynamicCollection = defineCollection({
 	loader: glob({ pattern: "**/*.md", base: "./src/content/dynamic" }),
 	schema: z.object({

@@ -249,6 +249,34 @@ html {
         transition: none !important;
     } */
 
+    /* 滚动切换壁纸模式时的渐进式过渡效果 */
+    /* --scroll-progress: 0（banner模式，壁纸不透明）~ 1（overlay模式，壁纸透明） */
+
+    /* 当有 --scroll-progress 时，壁纸始终全屏固定，透明度随滚动变化 */
+    html[style*="--scroll-progress"] #wallpaper-wrapper {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: 100vh !important;
+        min-height: 100vh !important;
+        max-height: 100vh !important;
+        transform: none !important;
+        z-index: -1 !important;
+        /* 透明度：从 100%（不透明）渐变到 overlay 的透明度 */
+        opacity: calc(1 - (1 - var(--overlay-opacity, 0.8)) * var(--scroll-progress, 0));
+    }
+
+    /* 内容区域：随滚动进度上移 */
+    html[style*="--scroll-progress"] body.enable-banner #main-grid {
+        transform: translateY(calc(var(--banner-height-extend, 0vh) * (1 - var(--scroll-progress, 0)))) !important;
+    }
+
+    /* 顶部横幅区域高度随滚动减小 */
+    html[style*="--scroll-progress"] body.enable-banner #top-row {
+        height: calc((var(--banner-height-home, 50vh) - 4.5rem) * (1 - var(--scroll-progress, 0))) !important;
+    }
+
     /* 全屏壁纸模式下的半透明效果 */
     .wallpaper-transparent .card-base {
         background-color: var(--card-bg-transparent) !important;

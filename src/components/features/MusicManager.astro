@@ -1,4 +1,6 @@
 ---
+import { existsSync, readdirSync } from "node:fs";
+import path from "node:path";
 import { musicPlayerConfig } from "@/config/musicConfig";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
@@ -6,33 +8,111 @@ import { url } from "@/utils/url-utils";
 
 const config = musicPlayerConfig;
 
-const localPlaylist =
+const isFullUrl = (filePath: string) => /^https?:\/\//.test(filePath);
+const toPublicUrl = (filePath?: string) => {
+	if (!filePath) return undefined;
+	return isFullUrl(filePath) ? filePath : url(filePath);
+};
+
+const audioExtensions = new Set([".mp3", ".flac", ".wav", ".ogg", ".m4a", ".aac"]);
+const coverExtensions = [".webp", ".png", ".jpg", ".jpeg", ".avif"];
+const lrcExtensions = [".lrc", ".txt"];
+
+function normalizePublicFolder(folder: string): string {
+	return folder.startsWith("/") ? folder : `/${folder}`;
+}
+
+function publicFolderToDiskPath(folder: string): string {
+	const normalizedFolder = normalizePublicFolder(folder);
+	return path.join(process.cwd(), "public", normalizedFolder.replace(/^\/+/, ""));
+}
+
+function encodePublicPath(filePath: string): string {
+	return filePath
+		.split("/")
+		.map((part, index) => (index === 0 ? part : encodeURIComponent(part)))
+		.join("/");
+}
+
+function findRelatedFile(folder: string, baseName: string, extensions: string[]) {
+	const diskFolder = publicFolderToDiskPath(folder);
+	if (!existsSync(diskFolder)) return undefined;
+	for (const extension of extensions) {
+		const diskPath = path.join(diskFolder, `${baseName}${extension}`);
+		if (existsSync(diskPath)) {
+			return encodePublicPath(`${normalizePublicFolder(folder)}/${baseName}${extension}`);
+		}
+	}
+	return undefined;
+}
+
+function parseSongInfo(fileName: string) {
+	const extension = path.extname(fileName);
+	const baseName = path.basename(fileName, extension);
+	const parts = baseName.split(/\s+-\s+/).filter(Boolean);
+	if (parts.length >= 2) {
+		return {
+			name: parts[0],
+			artist: parts.slice(1).join(" - "),
+			baseName,
+		};
+	}
+	return {
+		name: baseName,
+		artist: "未知歌手",
+		baseName,
+	};
+}
+
+function scanLocalMusicFolder() {
+	const autoScan = config.local?.autoScan;
+	if (config.mode !== "local" || !autoScan?.enable || !autoScan.folder) return [];
+
+	const musicFolder = normalizePublicFolder(autoScan.folder);
+	const diskFolder = publicFolderToDiskPath(musicFolder);
+	if (!existsSync(diskFolder)) return [];
+
+	const coverFolder = autoScan.coverFolder || `${musicFolder}/cover`;
+	const lrcFolder = autoScan.lrcFolder || `${musicFolder}/lrc`;
+
+	return readdirSync(diskFolder, { withFileTypes: true })
+		.filter((entry) => entry.isFile())
+		.filter((entry) => audioExtensions.has(path.extname(entry.name).toLowerCase()))
+		.sort((a, b) => a.name.localeCompare(b.name, "zh-CN"))
+		.map((entry) => {
+			const { name, artist, baseName } = parseSongInfo(entry.name);
+			const publicPath = encodePublicPath(`${musicFolder}/${entry.name}`);
+			return {
+				name,
+				artist,
+				url: toPublicUrl(publicPath),
+				pic: toPublicUrl(findRelatedFile(coverFolder, baseName, coverExtensions)),
+				lrc: toPublicUrl(findRelatedFile(lrcFolder, baseName, lrcExtensions)),
+			};
+		});
+}
+
+const scannedLocalPlaylist = scanLocalMusicFolder();
+
+const manualLocalPlaylist =
 	config.mode === "local" && config.local?.playlist
-		? config.local.playlist.map((song) => {
-				const isFullUrl = (path: string) => /^https?:\/\//.test(path);
-				return {
-					name: song.name,
-					artist: song.artist,
-					url: isFullUrl(song.url) ? song.url : url(song.url),
-					pic: song.cover
-						? isFullUrl(song.cover)
-							? song.cover
-							: url(song.cover)
-						: undefined,
-					lrc: song.lrc
-						? isFullUrl(song.lrc)
-							? song.lrc
-							: url(song.lrc)
-						: undefined,
-				};
-			})
+		? config.local.playlist.map((song) => ({
+				name: song.name,
+				artist: song.artist,
+				url: toPublicUrl(song.url),
+				pic: toPublicUrl(song.cover),
+				lrc: toPublicUrl(song.lrc),
+			}))
 		: [];
+
+const localPlaylist = [...scannedLocalPlaylist, ...manualLocalPlaylist];
 
 const managerConfigStr = JSON.stringify({
 	mode: config.mode,
 	meting: config.meting,
 	localPlaylist: localPlaylist,
 	volume: config.volume ?? 0.7,
+	autoPlay: config.autoPlay ?? false,
 	playMode: config.playMode ?? "list",
 	showLyrics: config.showLyrics ?? true,
 	i18n: {
@@ -222,6 +302,11 @@ const managerConfigStr = JSON.stringify({
                 if (ver !== loadVersion) return; // stale, discard
                 if (e.name === 'AbortError') return; // interrupted by new load
                 console.warn('Autoplay blocked:', e);
+                state.isPlaying = false;
+                emit('fm:play-state', { isPlaying: false });
+                if (config.autoPlay) {
+                    setupGestureAutoplay();
+                }
             });
         } else {
             state.isPlaying = false;
@@ -311,6 +396,28 @@ const managerConfigStr = JSON.stringify({
         }
     }
 
+    var gestureAutoplayBound = false;
+    function setupGestureAutoplay() {
+        if (gestureAutoplayBound || state.isPlaying) return;
+        gestureAutoplayBound = true;
+        var tryPlay = function () {
+            document.removeEventListener('click', tryPlay);
+            document.removeEventListener('touchstart', tryPlay);
+            document.removeEventListener('keydown', tryPlay);
+            gestureAutoplayBound = false;
+            if (!state.initialized || state.isPlaying || state.playlist.length === 0) return;
+            audio.play().then(function () {
+                state.isPlaying = true;
+                emit('fm:play-state', { isPlaying: true });
+            }).catch(function (e) {
+                console.warn('Autoplay after gesture failed:', e);
+            });
+        };
+        document.addEventListener('click', tryPlay, { once: true });
+        document.addEventListener('touchstart', tryPlay, { once: true });
+        document.addEventListener('keydown', tryPlay, { once: true });
+    }
+
     // ── Audio events → broadcast ─────────────────────────────
     audio.addEventListener('timeupdate', function () {
         if (isNaN(audio.duration)) return;
@@ -379,7 +486,7 @@ const managerConfigStr = JSON.stringify({
                     isMuted: state.isMuted
                 });
 
-                loadTrack(startIndex, false);
+                loadTrack(startIndex, !!config.autoPlay);
             } else {
                 state.initialized = true;
                 emit('fm:init', {

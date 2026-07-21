@@ -5,6 +5,10 @@ import {
 	NavBarSearchMethod,
 } from "../types/navBarConfig";
 
+// 顶部导航栏菜单配置
+// 如果要添加、删除、改名导航栏里的菜单项，优先修改这个文件。
+// 图标使用 Iconify 名称，例如 material-symbols:home-rounded。
+
 // ============================================================================
 // 导航栏配置 - 根据顺序动态生成导航栏链接
 // NavBar Configuration - Dynamically generate navigation bar links based on order
@@ -90,25 +94,25 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		children: [
 			{
 				name: "GitHub",
-				url: "https://github.com/CuteLeaf/Firefly",
+				url: "",
 				external: true,
 				icon: "fa7-brands:github",
 			},
 			{
 				name: "Gitee",
-				url: "https://gitee.com/CuteLeaf/Firefly",
+				url: "",
 				external: true,
 				icon: "fa7-brands:gitee",
 			},
 			{
 				name: "QQ交流群",
-				url: "https://qm.qq.com/q/ZGsFa8qX2G",
+				url: "",
 				external: true,
 				icon: "fa7-brands:qq",
 			},
 			{
-				name: "Firefly文档",
-				url: "https://docs-firefly.cuteleaf.cn",
+				name: "Feng Ye文档",
+				url: "",
 				external: true,
 				icon: "material-symbols:docs",
 			},

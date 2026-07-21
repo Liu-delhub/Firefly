@@ -1,6 +1,15 @@
 /* 横幅文字阴影 - 更柔和的扩散效果 */
 .banner-title {
-    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+    background: linear-gradient(105deg, #ffd6ee 0%, #ffffff 42%, #c9b6ff 72%, #f3d7ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    text-shadow:
+        0 4px 18px rgba(20, 12, 38, 0.5),
+        0 0 26px rgba(199, 157, 255, 0.32),
+        0 0 42px rgba(255, 183, 224, 0.22);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.32));
     /* 防止大字体标题溢出容器 */
     overflow-wrap: break-word;
     word-break: break-word;

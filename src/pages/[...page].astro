@@ -1,4 +1,8 @@
 ---
+// 首页 / 文章列表分页路由
+// 这个文件负责把 src/content/posts 里的文章按分页显示出来。
+// 每页显示几篇文章由 src/config/siteConfig.ts 里的 pagination.postsPerPage 控制。
+
 import type { GetStaticPaths } from "astro";
 import Pagination from "@/components/common/Pagination.astro";
 import PostPage from "@/components/layout/PostPage.astro";

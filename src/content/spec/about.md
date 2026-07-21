@@ -1,29 +1,27 @@
-# 关于我 / About Me
+# 关于我 / Feng Ye
 
-你好！我是 **夏叶** ，一个在数字世界中默默无闻的一片叶子。
+你好！我是 **枫叶** ，一个在数字世界中默默无闻的一片叶子
 
-## 🛠️ 关于本站
+关于我☁️
 
-这个网站使用 **Astro** 框架构建，采用了 [Firefly](https://github.com/CuteLeaf/Firefly) 模板，Firefly 是基于 [Fuwari](https://github.com/saicaca/fuwari) 的二次开发。
+我是偏向内向的人，不太擅长热烈直白地表达情绪，习惯安静站在一旁，用自己的节奏慢慢靠近想要珍惜的人。
+闲暇时光总热衷于收集各式各样新奇有趣的想法✧
 
-**Firefly** 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。
+一头扎进细腻的手工创作，也愿意钻研各类科技小事物
+沉浸其中的时候，世界会变得格外安静平和，那是只属于我的松弛时刻。
+心底藏着一份绵长的执念
 
+谈不上轰轰烈烈的喜欢，我所求的从来不是轰轰烈烈的奔赴，只是长久安稳的陪伴🌙
+不急于索要答案，不奢求立刻拥有，只想静静待在他身旁
 
-**🖥️在线预览： [Firefly - Demo site](https://firefly.cuteleaf.cn/)**
+难过的时候也渴望有人可以倾诉，只是骨子里的内敛，常常让很多心事在心底辗转许久。
+很多情绪不会大声说出口，任由温柔与细碎的伤感交织在一起
 
-**🏠我的博客： [https://blog.cuteleaf.cn](https://blog.cuteleaf.cn/)**
-
-**📝Firefly使用文档： [https://docs-firefly.cuteleaf.cn](https://docs-firefly.cuteleaf.cn/)**
-
-**⭐Firefly开源地址：[https://github.com/CuteLeaf/Firefly](https://github.com/CuteLeaf/Firefly)** 
-
-**⭐Fuwari开源地址：[https://github.com/saicaca/fuwari](https://github.com/saicaca/fuwari)**
-
-::github{repo="CuteLeaf/Firefly"}
-
-::github{repo="saicaca/fuwari"}
+我不擅长争抢，只期待细水长流
+慢慢相识，慢慢相处，慢慢相守
+但愿漫长岁月里，我想要陪伴的人，可以一直都在
 
 ---
 
-*感谢你的来访！希望在这里能找到对你有用的内容！*
+*感谢你的来访！希望你每天开开心心！*
 

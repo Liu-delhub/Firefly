@@ -13,6 +13,11 @@ export type GalleryAlbum = {
 
 // 相册配置
 export type GalleryConfig = {
+	// 自动扫描 public/gallery 下的子文件夹，每个子文件夹自动成为一本相册
+	autoScan?: {
+		enable?: boolean;
+		folder?: string;
+	};
 	albums: GalleryAlbum[];
 	columnWidth?: number; // 瀑布流最小列宽(px)，默认 240，浏览器根据容器宽度自动计算列数
 };

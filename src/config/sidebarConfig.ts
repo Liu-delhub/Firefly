@@ -1,5 +1,9 @@
 import type { SidebarLayoutConfig } from "../types/sidebarConfig";
 
+// 侧边栏配置
+// 控制侧边栏显示在左边、右边还是两边，以及每个侧边栏显示哪些小组件。
+// 如果觉得页面太挤，可以先改 position 或减少 widgetOrder 里的组件。
+
 /**
  * 侧边栏布局配置
  */

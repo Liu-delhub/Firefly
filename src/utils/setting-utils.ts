@@ -18,6 +18,10 @@ import {
 } from "../config";
 import { isHomePage as checkIsHomePage } from "./layout-utils";
 
+// 前端设置工具
+// 这里负责把配置真正应用到浏览器页面上，例如主题色、明暗模式、壁纸模式、全屏/横幅切换、樱花开关、壁纸轮播等。
+// 如果只是改默认值，优先改 src/config 里的配置文件；只有默认值没法满足需求时，才改这里的逻辑。
+
 // Declare global functions
 declare global {
 	interface Window {
@@ -863,6 +867,123 @@ export function initWallpaperMode(): void {
 	applyStoredOverlaySettingsToDocument();
 	const storedMode = getStoredWallpaperMode();
 	applyWallpaperModeToDocument(storedMode, false);
+	// 初始化滚动过渡效果
+	initScrollToOverlay();
+}
+
+// 滚动时自动切换壁纸模式（banner ↔ overlay）——渐进式过渡
+let scrollToOverlayInitialized = false;
+let scrollUserOverride = false;
+
+function initScrollToOverlay(): void {
+	if (typeof window === "undefined") return;
+	if (scrollToOverlayInitialized) return;
+
+	const config = backgroundWallpaper.scrollToOverlay;
+	if (!config?.enable) return;
+
+	scrollToOverlayInitialized = true;
+	const threshold = config.threshold ?? 300;
+	const onlyHome = config.onlyHome !== false;
+
+	const WALLPAPER_BANNER_MODE = WALLPAPER_BANNER;
+	const WALLPAPER_OVERLAY_MODE = WALLPAPER_OVERLAY;
+
+	function checkIsHomePage(): boolean {
+		const path = window.location.pathname;
+		return path === "/" || path === "" || path.endsWith("/index.html");
+	}
+
+	function shouldEnable(): boolean {
+		if (onlyHome && !checkIsHomePage()) return false;
+		if (scrollUserOverride) return false;
+		const currentMode = document.documentElement.getAttribute("data-wallpaper-mode");
+		// 只有 banner 或 overlay 模式才启用滚动过渡
+		return currentMode === WALLPAPER_BANNER_MODE || currentMode === WALLPAPER_OVERLAY_MODE;
+	}
+
+	// 计算滚动进度（0 ~ 1）
+	function getScrollProgress(): number {
+		const scrollY = window.scrollY || window.pageYOffset;
+		const progress = Math.min(scrollY / threshold, 1);
+		return progress;
+	}
+
+	// 应用渐进式过渡效果
+	function applyScrollProgress(progress: number): void {
+		const currentMode = document.documentElement.getAttribute("data-wallpaper-mode");
+
+		// banner 模式且进度 < 1：用 CSS 变量控制渐进效果
+		if (currentMode === WALLPAPER_BANNER_MODE && progress < 1) {
+			document.documentElement.style.setProperty("--scroll-progress", String(progress));
+			return;
+		}
+
+		// banner 模式且进度 >= 1：切换到 overlay 模式
+		if (currentMode === WALLPAPER_BANNER_MODE && progress >= 1) {
+			scrollUserOverride = false;
+			applyWallpaperModeToDocument(WALLPAPER_OVERLAY_MODE, true);
+			document.documentElement.style.removeProperty("--scroll-progress");
+			return;
+		}
+
+		// overlay 模式且进度 > 0：用 CSS 变量控制反向渐进效果（从 overlay 往 banner 过渡）
+		// 注意：overlay 模式下，我们从底部向上滚动，进度从 1 降到 0
+		if (currentMode === WALLPAPER_OVERLAY_MODE && progress > 0) {
+			// overlay 模式下，我们用反向的进度来显示
+			// 实际上 overlay 模式就是进度 1 的状态，所以直接设置进度即可
+			document.documentElement.style.setProperty("--scroll-progress", String(progress));
+			return;
+		}
+
+		// overlay 模式且进度 <= 0：切换回 banner 模式
+		if (currentMode === WALLPAPER_OVERLAY_MODE && progress <= 0) {
+			scrollUserOverride = false;
+			applyWallpaperModeToDocument(WALLPAPER_BANNER_MODE, true);
+			document.documentElement.style.removeProperty("--scroll-progress");
+			return;
+		}
+	}
+
+	// 使用 rAF 节流，确保流畅
+	let ticking = false;
+	function onScroll(): void {
+		if (!ticking) {
+			window.requestAnimationFrame(() => {
+				if (shouldEnable()) {
+					const progress = getScrollProgress();
+					applyScrollProgress(progress);
+				}
+				ticking = false;
+			});
+			ticking = true;
+		}
+	}
+
+	window.addEventListener("scroll", onScroll, { passive: true });
+
+	// 监听用户手动切换模式
+	window.addEventListener("wallpaperModeChange", (e) => {
+		const detail = (e as CustomEvent).detail;
+		if (detail?.mode) {
+			const mode = detail.mode;
+			if (mode !== WALLPAPER_BANNER_MODE && mode !== WALLPAPER_OVERLAY_MODE) {
+				scrollUserOverride = true;
+				document.documentElement.style.removeProperty("--scroll-progress");
+			} else {
+				scrollUserOverride = false;
+				document.documentElement.style.removeProperty("--scroll-progress");
+			}
+		}
+	});
+
+	// 页面加载时触发一次
+	setTimeout(() => {
+		if (shouldEnable()) {
+			const progress = getScrollProgress();
+			applyScrollProgress(progress);
+		}
+	}, 100);
 }
 
 export function getStoredWallpaperMode(): WALLPAPER_MODE {

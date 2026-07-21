@@ -2,6 +2,12 @@ export type BackgroundWallpaperConfig = {
 	mode: "banner" | "fullscreen" | "overlay" | "none"; // 壁纸模式：banner横幅模式、fullscreen全屏壁纸、overlay全屏透明覆盖模式或none纯色背景
 	switchable?: boolean; // 是否允许用户通过导航栏切换壁纸模式，默认true
 	playerEnable?: boolean; // 是否启用背景视频播放，默认false
+	// 滚动时自动从banner过渡到overlay模式
+	scrollToOverlay?: {
+		enable?: boolean; // 是否启用滚动过渡效果，默认false
+		threshold?: number; // 触发过渡的滚动距离（像素），默认300
+		onlyHome?: boolean; // 是否仅在首页启用，默认true
+	}; // 滚动时自动切换到全屏透明模式
 	src:
 		| string
 		| string[]

@@ -1,5 +1,9 @@
 import type { ProfileConfig } from "../types/profileConfig";
 
+// 个人资料配置
+// 主要影响侧边栏个人信息卡片：头像、昵称、个人签名和社交链接。
+// 如果只想删除某个链接，可以删除 links 数组里对应的那一整段。
+
 export const profileConfig: ProfileConfig = {
 	// 头像
 	// 图片路径支持三种格式：
@@ -9,10 +13,10 @@ export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/avatar.avif",
 
 	// 名字
-	name: "Firefly",
+	name: "Feng Ye",
 
 	// 个人签名
-	bio: "Hello, I'm Firefly.",
+	bio: "Hello, I'm Feng Ye.",
 
 	// 链接配置
 	// 已经预装的图标集：fa7-brands，fa7-regular，fa7-solid，material-symbols，simple-icons
@@ -24,13 +28,13 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "qq",
 			icon: "fa7-brands:qq",
-			url: "https://qm.qq.com/q/ZGsFa8qX2G",
+			url: "",
 			showName: false,
 		},
 		{
 			name: "GitHub",
 			icon: "fa7-brands:github",
-			url: "https://github.com/CuteLeaf",
+			url: "",
 			showName: false,
 		},
 		{

@@ -3,7 +3,11 @@ import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { getCategoryUrl } from "@utils/url-utils";
 
-// // Retrieve posts and sort them by publication date
+// 文章内容工具
+// 这里负责读取文章、排序文章、处理置顶、分类统计、标签统计、上一篇/下一篇和相关文章。
+// 如果你只是发布或删除文章，不需要改这里；如果要改变文章排序规则，再看这里。
+
+// 读取文章并按置顶和发布时间排序
 async function getRawSortedPosts() {
 	const allBlogPosts = await getCollection("posts", ({ data }) => {
 		return import.meta.env.PROD ? data.draft !== true : true;
@@ -14,10 +18,14 @@ async function getRawSortedPosts() {
 		if (a.data.pinned && !b.data.pinned) return -1;
 		if (!a.data.pinned && b.data.pinned) return 1;
 
-		// 如果置顶状态相同，则按发布日期排序
+		// 如果置顶状态相同，则按发布时间排序；同一天多篇文章时，时间越晚越靠前
 		const dateA = new Date(a.data.published);
 		const dateB = new Date(b.data.published);
-		return dateA > dateB ? -1 : 1;
+		const timeDiff = dateB.getTime() - dateA.getTime();
+		if (timeDiff !== 0) return timeDiff;
+
+		// 如果发布时间完全一样，再按文件路径排序，避免同一天多篇文章顺序随机变化
+		return a.id.localeCompare(b.id, "zh-CN");
 	});
 	return sorted;
 }

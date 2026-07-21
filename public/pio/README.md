@@ -10,7 +10,7 @@
 
 ```typescript
 export const spineModelConfig: SpineModelConfig = {
-  enable: false, // 是否启用看板娘（默认关闭）
+  enable: true, // 是否启用看板娘（默认关闭）
   model: {
     path: "/pio/models/shizuku/shizuku.model.json", // 模型文件路径
     scale: 1.0, // 模型缩放比例

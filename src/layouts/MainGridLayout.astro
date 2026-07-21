@@ -1,4 +1,9 @@
 ---
+// 主页面网格布局
+// 这里负责导航栏、主页壁纸、横幅文字、侧边栏、主体内容、页脚和悬浮按钮。
+// 如果你想改“主页看起来怎么排列”，通常会来到这个文件。
+// 如果只是换壁纸图片、改默认全屏/横幅，优先改 src/config/backgroundWallpaper.ts。
+
 import Live2DWidget from "@components/features/Live2DWidget.astro";
 
 import SpineModel from "@components/features/SpineModel.astro";
@@ -61,6 +66,7 @@ interface Props {
 	};
 }
 
+// 根据 backgroundWallpaper.ts 的配置，取出桌面端和手机端背景图
 const backgroundImages = getBackgroundImages();
 
 const {
@@ -76,7 +82,7 @@ const {
 	bannerPostMeta,
 } = Astro.props;
 
-// 检查背景壁纸模式和是否允许切换
+// 检查背景壁纸模式和是否允许切换，后面会根据这些值决定渲染横幅、全屏壁纸还是透明背景
 const isBannerMode = backgroundWallpaper.mode === "banner";
 const isFullscreenMode = backgroundWallpaper.mode === "fullscreen";
 const isOverlayMode = backgroundWallpaper.mode === "overlay";
@@ -936,4 +942,3 @@ const hasMultipleImages =
   }
 
 </style>
-
