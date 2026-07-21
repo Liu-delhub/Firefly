@@ -1,29 +1,93 @@
 /* 横幅文字阴影 - 更柔和的扩散效果 */
 .banner-title {
-    background: linear-gradient(105deg, #ffd6ee 0%, #ffffff 42%, #c9b6ff 72%, #f3d7ff 100%);
+    background:
+        linear-gradient(100deg, #fff7fb 0%, #ffd2ec 22%, #ffffff 46%, #d9ccff 72%, #ffe7fb 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.22);
+    text-shadow:
+        0 5px 18px rgba(20, 12, 38, 0.52),
+        0 0 24px rgba(255, 210, 236, 0.44),
+        0 0 44px rgba(199, 157, 255, 0.32),
+        0 0 72px rgba(255, 183, 224, 0.2);
+    filter:
+        drop-shadow(0 3px 10px rgba(0, 0, 0, 0.36))
+        drop-shadow(0 0 14px rgba(255, 222, 245, 0.2));
+    /* 防止大字体标题溢出容器 */
+    overflow-wrap: break-word;
+    word-break: break-word;
+    /* 响应式字体大小：桌面更醒目，小屏自动收缩 */
+    font-size: clamp(3rem, 6.2vw, var(--banner-title-size, 5rem));
+    /* 独立字体设置，通过 fontConfig.bannerTitleFont 配置 */
+    font-family: var(--font-banner-title, inherit);
+    letter-spacing: -0.045em;
+    line-height: 1.05;
+}
+
+.banner-subtitle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: fit-content;
+    max-width: min(88vw, 46rem);
+    margin-inline: auto;
+    padding: 0.18rem 1.8rem;
+    background: linear-gradient(100deg, rgba(255, 255, 255, 0.86), #ffe0f1 36%, #ffffff 56%, #d9ceff 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
     text-shadow:
-        0 4px 18px rgba(20, 12, 38, 0.5),
-        0 0 26px rgba(199, 157, 255, 0.32),
-        0 0 42px rgba(255, 183, 224, 0.22);
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.32));
-    /* 防止大字体标题溢出容器 */
-    overflow-wrap: break-word;
-    word-break: break-word;
-    /* 响应式字体大小：取用户配置值与视口宽度10%中的较小值，防止小屏幕溢出 */
-    font-size: var(--banner-title-size, 3rem);
-    font-size: min(var(--banner-title-size, 3rem), 10vw);
-    /* 独立字体设置，通过 fontConfig.bannerTitleFont 配置 */
-    font-family: var(--font-banner-title, inherit);
-}
-
-.banner-subtitle {
-    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+        0 2px 10px rgba(20, 12, 38, 0.46),
+        0 0 18px rgba(255, 218, 241, 0.28);
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.28));
+    letter-spacing: 0.08em;
+    font-weight: 600;
     /* 独立字体设置，通过 fontConfig.bannerSubtitleFont 配置 */
     font-family: var(--font-banner-subtitle, inherit);
+}
+
+.banner-subtitle::before,
+.banner-subtitle::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: clamp(2.2rem, 8vw, 7rem);
+    height: 1px;
+    opacity: 0.72;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, transparent, rgba(255, 236, 248, 0.76), rgba(216, 204, 255, 0.46));
+    box-shadow: 0 0 10px rgba(255, 214, 238, 0.26);
+}
+
+.banner-subtitle::before {
+    right: calc(100% - 1.15rem);
+}
+
+.banner-subtitle::after {
+    left: calc(100% - 1.15rem);
+    transform: translateY(-50%) scaleX(-1);
+}
+
+@media (max-width: 767px) {
+    .banner-title {
+        font-size: clamp(2.4rem, 12vw, 4rem);
+        -webkit-text-stroke-width: 0.6px;
+    }
+
+    .banner-subtitle {
+        padding: 0.16rem 1rem;
+        max-width: min(90vw, 32rem);
+        letter-spacing: 0.04em;
+    }
+
+    .banner-subtitle::before,
+    .banner-subtitle::after {
+        width: clamp(1.2rem, 7vw, 3rem);
+    }
 }
 
 /* 横幅背景暗层透明度 - 通过配置文件 common.dimOpacity 控制，内联样式覆盖 */

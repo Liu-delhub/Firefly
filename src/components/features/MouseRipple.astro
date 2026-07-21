@@ -1,0 +1,108 @@
+<div id="mouse-liquid-trail-layer" aria-hidden="true"></div>
+
+<style>
+	#mouse-liquid-trail-layer {
+		position: fixed;
+		inset: 0;
+		z-index: 60;
+		pointer-events: none;
+		overflow: hidden;
+	}
+
+	.mouse-liquid-drop {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: var(--drop-size, 42px);
+		height: var(--drop-size, 42px);
+		border-radius: 999px;
+		transform: translate(-50%, -50%) scale(0.72);
+		background:
+			radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.28) 18%, transparent 35%),
+			radial-gradient(circle, rgba(255, 214, 238, 0.34) 0%, rgba(190, 208, 255, 0.2) 42%, transparent 72%);
+		border: 1px solid rgba(255, 255, 255, 0.32);
+		box-shadow:
+			0 0 18px rgba(255, 183, 224, 0.14),
+			inset 0 1px 0 rgba(255, 255, 255, 0.36);
+		mix-blend-mode: screen;
+		filter: blur(0.25px) saturate(1.14);
+		opacity: 0;
+		animation: liquid-drop-fade 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+	}
+
+	@keyframes liquid-drop-fade {
+		0% {
+			opacity: 0.42;
+			transform: translate(-50%, -50%) scale(0.62);
+		}
+		45% {
+			opacity: 0.26;
+			transform: translate(calc(-50% + var(--drop-drift-x, 0px)), calc(-50% + var(--drop-drift-y, 0px))) scale(1);
+		}
+		100% {
+			opacity: 0;
+			transform: translate(calc(-50% + var(--drop-drift-x, 0px)), calc(-50% + var(--drop-drift-y, 0px))) scale(1.24);
+		}
+	}
+
+	@media (max-width: 1023px), (prefers-reduced-motion: reduce) {
+		#mouse-liquid-trail-layer {
+			display: none;
+		}
+	}
+</style>
+
+<script>
+	(() => {
+		const layer = document.getElementById("mouse-liquid-trail-layer");
+		if (!layer) return;
+		const trailLayer = layer;
+
+		const canUseLiquidTrail = () =>
+			window.matchMedia("(min-width: 1024px)").matches &&
+			!window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+		let lastTime = 0;
+		let lastX = 0;
+		let lastY = 0;
+
+		function createDrop(x: number, y: number, velocityX: number, velocityY: number) {
+			const drop = document.createElement("span");
+			drop.className = "mouse-liquid-drop";
+
+			const size = 26 + Math.random() * 28;
+			const driftX = -velocityX * (0.12 + Math.random() * 0.18);
+			const driftY = -velocityY * (0.12 + Math.random() * 0.18);
+
+			drop.style.left = `${x}px`;
+			drop.style.top = `${y}px`;
+			drop.style.setProperty("--drop-size", `${size}px`);
+			drop.style.setProperty("--drop-drift-x", `${driftX}px`);
+			drop.style.setProperty("--drop-drift-y", `${driftY}px`);
+
+			trailLayer.appendChild(drop);
+			window.setTimeout(() => drop.remove(), 960);
+		}
+
+		function handlePointerMove(event: PointerEvent) {
+			if (!canUseLiquidTrail() || event.pointerType === "touch") return;
+
+			const now = performance.now();
+			const velocityX = event.clientX - lastX;
+			const velocityY = event.clientY - lastY;
+			const distance = Math.hypot(velocityX, velocityY);
+
+			if (now - lastTime < 42 || distance < 12) return;
+
+			lastTime = now;
+			lastX = event.clientX;
+			lastY = event.clientY;
+			createDrop(event.clientX, event.clientY, velocityX, velocityY);
+		}
+
+		document.addEventListener("pointermove", handlePointerMove, { passive: true });
+		document.addEventListener("astro:before-swap", () => {
+			trailLayer.replaceChildren();
+		});
+	})();
+</script>

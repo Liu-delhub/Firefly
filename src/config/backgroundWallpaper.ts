@@ -1,4 +1,8 @@
 import type { BackgroundWallpaperConfig } from "@/types/backgroundWallpaper";
+import {
+	autoDesktopWallpapers,
+	autoMobileWallpapers,
+} from "../utils/wallpaper-utils";
 
 // 主页壁纸配置文件
 // 常改位置：
@@ -27,56 +31,18 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		onlyHome: true,
 	},
 	/**
-	 * 背景图片配置
-	 * 图片路径支持三种格式：
-	 * 1. public 目录（以 "/" 开头，不优化）："/assets/images/banner.avif"
-	 * 2. src 目录（不以 "/" 开头，自动优化但会增加构建时间，推荐）："assets/images/banner.avif"
-	 * 3. 远程 URL："https://example.com/banner.jpg"
-	 * 注意：远程URL和public目录的图片不会被优化，请确保图片体积足够小以免影响加载速度
-	 *
-	 * 建议不要替换d1-d6，m1-m6这些默认示例图片，但你可以删除掉节省空间
-	 * 因为以后可能会更换示例图片，导致你自定义的图片被覆盖
-	 * 所以建议使用自己的图片的时候命名为其他名称，不要使用d1-d6，m1-m6这些名称
-	 *
-	 * 如果只使用一张图片或者使用随机图API，推荐直接使用字符串格式：
-	 * desktop: "https://t.alcy.cc/pc",   // 随机图API
-	 * desktop: "assets/images/DesktopWallpaper/d1.avif", // 单张图片
-	 *
-	 * mobile: "https://t.alcy.cc/mp", // 随机图API
-	 * mobile: "assets/images/MobileWallpaper/m1.avif", // 单张图片
-	 *
-	 * 支持配置多张图片（数组），每次刷新页面随机显示一张：
-	 * desktop: [
-	 * "assets/images/DesktopWallpaper/d1.avif",
-	 * "assets/images/DesktopWallpaper/d2.avif",
-	 * ],
-	 *
-	 * mobile:[
-	 *   "assets/images/MobileWallpaper/m1.avif",
-	 *   "assets/images/MobileWallpaper/m2.avif",
-	 * ],
+	 * 背景图片配置现在支持自动扫描文件夹：
+	 * 1. 电脑端壁纸：src/assets/images/DesktopWallpaper
+	 * 2. 手机端壁纸：src/assets/images/MobileWallpaper
+	 * 3. 支持 png / jpg / jpeg / webp / avif
+	 * 4. 把图片放进对应文件夹后，会自动加入随机壁纸列表，不用手动写路径
+	 * 5. 如果你想用远程随机图 API，也可以把下面的 desktop/mobile 改回字符串 URL
 	 */
 	src: {
-		// 桌面背景图片（支持单张或多张随机）
-		// desktop: "assets/images/DesktopWallpaper/d1.avif",
-		desktop: [
-			"assets/images/DesktopWallpaper/d1.avif",
-			"assets/images/DesktopWallpaper/d2.avif",
-			"assets/images/DesktopWallpaper/d3.avif",
-			"assets/images/DesktopWallpaper/d4.avif",
-			"assets/images/DesktopWallpaper/d5.avif",
-			"assets/images/DesktopWallpaper/d6.avif",
-		],
-		// 移动背景图片（支持单张或多张随机）
-		// mobile: "assets/images/MobileWallpaper/m1.avif",
-		mobile: [
-			"assets/images/MobileWallpaper/m1.avif",
-			"assets/images/MobileWallpaper/m2.avif",
-			"assets/images/MobileWallpaper/m3.avif",
-			"assets/images/MobileWallpaper/m4.avif",
-			"assets/images/MobileWallpaper/m5.avif",
-			"assets/images/MobileWallpaper/m6.avif",
-		],
+		// 电脑端壁纸：自动读取 src/assets/images/DesktopWallpaper 里的图片
+		desktop: autoDesktopWallpapers,
+		// 手机端壁纸：自动读取 src/assets/images/MobileWallpaper 里的图片
+		mobile: autoMobileWallpapers,
 		// 背景视频播放地址
 		// 支持单个视频路径（字符串）或多个视频循环（数组）
 		// 支持远程视频URL，本地视频请放在 public/assets/videos/ 目录下
@@ -101,7 +67,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			// 主页横幅主标题
 			title: "Lovely fengye!",
 			// 主页横幅主标题字体大小
-			titleSize: "3.8rem",
+			titleSize: "5rem",
 			// 主页横幅副标题
 			subtitle: [
 				"In Reddened Chrysalis, I Once Rest",
@@ -112,7 +78,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 				"In Finalized Morrow, I Full Bloom",
 			],
 			// 主页横幅副标题字体大小
-			subtitleSize: "1.5rem",
+			subtitleSize: "1.65rem",
 			typewriter: {
 				// 是否启用打字机效果
 				// 打字机开启 → 循环显示所有副标题

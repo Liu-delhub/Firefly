@@ -203,11 +203,84 @@ html {
         backdrop-filter: none !important;
     }
     
-    .card-base {
-        @apply rounded-(--radius-large) overflow-hidden bg-(--card-bg) transition-colors duration-150;
-    }
+    .card-base,
     .card-base-transparent {
-        @apply rounded-(--radius-large) overflow-hidden bg-(--card-bg-transparent) transition-colors duration-150;
+        border-radius: 1.35rem;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.64);
+        border: 1px solid rgba(255, 255, 255, 0.38);
+        box-shadow:
+            0 14px 36px rgba(15, 12, 28, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.36);
+        backdrop-filter: blur(14px) saturate(1.08);
+        -webkit-backdrop-filter: blur(14px) saturate(1.08);
+        transition:
+            background-color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+            border-color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+            box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    :root.dark .card-base,
+    :root.dark .card-base-transparent {
+        background: rgba(24, 24, 30, 0.5);
+        border-color: rgba(255, 255, 255, 0.14);
+        box-shadow:
+            0 14px 36px rgba(0, 0, 0, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .card-base:hover,
+    .card-base-transparent:hover {
+        border-color: rgba(255, 255, 255, 0.48);
+        box-shadow:
+            0 18px 42px rgba(15, 12, 28, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.42);
+    }
+
+    /* 热门个人博客常见的卡片层次：轻高光、轻上浮、内容更有呼吸感 */
+    .card-base {
+        position: relative;
+    }
+
+    .card-base::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        border-radius: inherit;
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 38%),
+            radial-gradient(circle at 12% 0%, color-mix(in oklch, var(--primary) 12%, transparent), transparent 34%);
+        opacity: 0.62;
+        transition:
+            opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .card-base > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .post-card-wrapper:hover,
+    widget-layout.card-base:hover,
+    .card-base:hover {
+        transform: translateY(-3px);
+    }
+
+    .post-card-wrapper:hover::before,
+    widget-layout.card-base:hover::before,
+    .card-base:hover::before {
+        opacity: 0.9;
+        transform: translateY(-1px);
+    }
+
+    :root.dark .card-base::before {
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 38%),
+            radial-gradient(circle at 12% 0%, color-mix(in oklch, var(--primary) 18%, transparent), transparent 36%);
+        opacity: 0.54;
     }
 
     /* LQIP 占位渐变 */
@@ -222,13 +295,21 @@ html {
 
     /* 开启边框和阴影效果时的样式 */
     .enable-card-border .card-base {
-        @apply transition-all duration-300 border border-(--line-divider) shadow-xs;
+        @apply transition-all duration-300;
+        border: 1px solid rgba(255, 255, 255, 0.38);
+        box-shadow:
+            0 14px 36px rgba(15, 12, 28, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.36);
     }
     .enable-card-border .card-base-transparent {
-        @apply transition-all duration-300 border border-(--line-divider) shadow-xs;
+        @apply transition-all duration-300;
+        border: 1px solid rgba(255, 255, 255, 0.38);
+        box-shadow:
+            0 14px 36px rgba(15, 12, 28, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.36);
     }
     .enable-card-border .btn-card {
-        @apply transition-all duration-300 border border-(--line-divider) shadow-xs;
+        @apply transition-all duration-300;
     }
 
     /* 导航栏样式适配 */
@@ -279,7 +360,7 @@ html {
 
     /* 全屏壁纸模式下的半透明效果 */
     .wallpaper-transparent .card-base {
-        background-color: var(--card-bg-transparent) !important;
+        background: rgba(255, 255, 255, 0.58) !important;
     }
  
     
@@ -298,11 +379,177 @@ html {
     }
     
     .wallpaper-transparent .btn-card {
-        background-color: var(--card-bg-transparent) !important;
+        background: rgba(255, 255, 255, 0.42) !important;
     }
 
     .wallpaper-transparent .bg-\(--card-bg\) {
-        background-color: var(--card-bg-transparent) !important;
+        background-color: rgba(255, 255, 255, 0.48) !important;
+    }
+
+    :root.dark .wallpaper-transparent .card-base {
+        background: rgba(24, 24, 30, 0.48) !important;
+    }
+
+    :root.dark .wallpaper-transparent .btn-card {
+        background: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    :root.dark .wallpaper-transparent .bg-\(--card-bg\) {
+        background-color: rgba(24, 24, 30, 0.42) !important;
+    }
+
+    .bg-\(--card-bg\) {
+        background-color: rgba(255, 255, 255, 0.46);
+        border-color: rgba(255, 255, 255, 0.28);
+        backdrop-filter: blur(10px) saturate(1.04);
+        -webkit-backdrop-filter: blur(10px) saturate(1.04);
+    }
+
+    :root.dark .bg-\(--card-bg\) {
+        background-color: rgba(24, 24, 30, 0.42);
+        border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    input,
+    textarea,
+    select {
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.42);
+        border-color: rgba(255, 255, 255, 0.34);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+        backdrop-filter: blur(10px) saturate(1.05);
+        -webkit-backdrop-filter: blur(10px) saturate(1.05);
+    }
+
+    textarea {
+        border-radius: 1.1rem;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: none;
+        border-color: color-mix(in oklch, var(--primary) 45%, rgba(255, 255, 255, 0.42));
+        box-shadow:
+            0 0 0 3px color-mix(in oklch, var(--primary) 18%, transparent),
+            inset 0 1px 0 rgba(255, 255, 255, 0.34);
+    }
+
+    :root.dark input,
+    :root.dark textarea,
+    :root.dark select {
+        background: rgba(255, 255, 255, 0.07);
+        border-color: rgba(255, 255, 255, 0.14);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .post-card-wrapper {
+        border-radius: 1.45rem !important;
+    }
+
+    .post-card-title {
+        letter-spacing: -0.03em;
+    }
+
+    .post-card-title::before,
+    .widget-title::before {
+        width: 0.28rem !important;
+        border-radius: 999px !important;
+        background: linear-gradient(180deg, color-mix(in oklch, var(--primary) 78%, white), var(--primary)) !important;
+        box-shadow:
+            0 0 14px color-mix(in oklch, var(--primary) 42%, transparent),
+            0 3px 8px color-mix(in oklch, var(--primary) 22%, transparent);
+    }
+
+    .post-card-enter-btn {
+        width: 3rem !important;
+        border-radius: 1rem !important;
+        background: color-mix(in oklch, var(--primary) 14%, rgba(255, 255, 255, 0.56)) !important;
+        border: 1px solid rgba(255, 255, 255, 0.34);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.34),
+            0 8px 22px rgba(15, 12, 28, 0.06);
+        backdrop-filter: blur(12px) saturate(1.12);
+        -webkit-backdrop-filter: blur(12px) saturate(1.12);
+    }
+
+    .post-card-enter-btn:hover {
+        transform: translateX(2px) scale(1.02);
+        background: color-mix(in oklch, var(--primary) 22%, rgba(255, 255, 255, 0.66)) !important;
+    }
+
+    .post-meta-root > div,
+    .post-card-bottom-tags a,
+    .stats a {
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.34);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        padding: 0.28rem 0.55rem;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+        backdrop-filter: blur(8px) saturate(1.04);
+        -webkit-backdrop-filter: blur(8px) saturate(1.04);
+    }
+
+    :root.dark .post-meta-root > div,
+    :root.dark .post-card-bottom-tags a,
+    :root.dark .stats a {
+        background: rgba(255, 255, 255, 0.07);
+        border-color: rgba(255, 255, 255, 0.12);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    widget-layout .widget-title {
+        letter-spacing: -0.02em;
+    }
+
+    .card-base img {
+        transition:
+            transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+            filter 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .card-base:hover img {
+        filter: saturate(1.04) contrast(1.02);
+    }
+
+    .card-base a[aria-label="Go to About Page"] {
+        border-radius: 1.15rem !important;
+        border: 1px solid rgba(255, 255, 255, 0.42);
+        box-shadow:
+            0 10px 24px rgba(15, 12, 28, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    }
+
+    .card-base a[aria-label="Go to About Page"]::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        border-radius: inherit;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 52%);
+        z-index: 20;
+    }
+
+    .btn-regular {
+        border-radius: 999px !important;
+        background: rgba(255, 255, 255, 0.42) !important;
+        border: 1px solid rgba(255, 255, 255, 0.26);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+        backdrop-filter: blur(8px) saturate(1.05);
+        -webkit-backdrop-filter: blur(8px) saturate(1.05);
+    }
+
+    .btn-regular:hover {
+        background: color-mix(in oklch, var(--primary) 14%, rgba(255, 255, 255, 0.56)) !important;
+        border-color: color-mix(in oklch, var(--primary) 24%, rgba(255, 255, 255, 0.34));
+        box-shadow:
+            0 8px 22px rgba(15, 12, 28, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.34);
+    }
+
+    :root.dark .btn-regular {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border-color: rgba(255, 255, 255, 0.12);
     }
 
     h1, h2, h3, h4, h5, h6, p, a, span, li, ul, ol, blockquote, code, pre, table, th, td, strong {
@@ -318,7 +565,22 @@ html {
         @apply transition-colors duration-150 rounded-md p-1.5 -m-1.5 expand-animation;
     }
     .float-panel {
-        @apply top-21 rounded-(--radius-large) overflow-hidden bg-(--card-bg) transition-colors duration-150 shadow-xl border border-black/5 dark:border-white/10
+        @apply top-21 overflow-hidden transition-colors duration-150;
+        border-radius: 1.35rem;
+        background: rgba(255, 255, 255, 0.68);
+        border: 1px solid rgba(255, 255, 255, 0.36);
+        box-shadow:
+            0 18px 42px rgba(15, 12, 28, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.36);
+        backdrop-filter: blur(16px) saturate(1.1);
+        -webkit-backdrop-filter: blur(16px) saturate(1.1);
+    }
+    :root.dark .float-panel {
+        background: rgba(24, 24, 30, 0.58);
+        border-color: rgba(255, 255, 255, 0.14);
+        box-shadow:
+            0 18px 42px rgba(0, 0, 0, 0.28),
+            inset 0 1px 0 rgba(255, 255, 255, 0.12);
     }
     .float-panel-closed {
         @apply -translate-y-1 opacity-0 pointer-events-none
@@ -331,8 +593,32 @@ html {
     }
 
     .btn-card {
-        @apply transition-colors duration-150 flex items-center justify-center bg-(--card-bg) hover:bg-(--btn-card-bg-hover)
-        active:bg-(--btn-card-bg-active)
+        @apply transition-colors duration-150 flex items-center justify-center;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.48);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+        backdrop-filter: blur(10px) saturate(1.05);
+        -webkit-backdrop-filter: blur(10px) saturate(1.05);
+    }
+    .btn-card:hover {
+        background: rgba(255, 255, 255, 0.62);
+        border-color: rgba(255, 255, 255, 0.42);
+        box-shadow:
+            0 8px 22px rgba(15, 12, 28, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.38);
+    }
+    .btn-card:active {
+        background: rgba(255, 255, 255, 0.7);
+    }
+    :root.dark .btn-card {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.12);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+    :root.dark .btn-card:hover {
+        background: rgba(255, 255, 255, 0.13);
+        border-color: rgba(255, 255, 255, 0.18);
     }
     .btn-card.disabled {
         @apply pointer-events-none text-black/10 dark:text-white/10
@@ -351,8 +637,27 @@ html {
         @apply bg-(--btn-plain-bg-hover) text-(--primary);
     }
     .btn-regular {
-        @apply transition-colors duration-150 flex items-center justify-center bg-(--btn-regular-bg) hover:bg-(--btn-regular-bg-hover) active:bg-(--btn-regular-bg-active)
-        text-(--btn-content) dark:text-white/75
+        @apply transition-colors duration-150 flex items-center justify-center text-(--btn-content) dark:text-white/75;
+        border-radius: 999px !important;
+        background: rgba(255, 255, 255, 0.42) !important;
+        border: 1px solid rgba(255, 255, 255, 0.26);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+        backdrop-filter: blur(8px) saturate(1.05);
+        -webkit-backdrop-filter: blur(8px) saturate(1.05);
+    }
+    .btn-regular:hover {
+        background: color-mix(in oklch, var(--primary) 14%, rgba(255, 255, 255, 0.56)) !important;
+        border-color: color-mix(in oklch, var(--primary) 24%, rgba(255, 255, 255, 0.34));
+        box-shadow:
+            0 8px 22px rgba(15, 12, 28, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.34);
+    }
+    .btn-regular:active {
+        background: color-mix(in oklch, var(--primary) 18%, rgba(255, 255, 255, 0.62)) !important;
+    }
+    :root.dark .btn-regular {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border-color: rgba(255, 255, 255, 0.12);
     }
 
     .link-underline {
@@ -614,4 +919,3 @@ html {
 .pagination-info {
   @apply text-sm text-(--text-secondary) text-center mb-2;
 }
-

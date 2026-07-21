@@ -124,7 +124,19 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			},
 		},
 		{
-			// 组件类型：站点统计组件
+			// 组件类型：时间天气组件
+			type: "timeWeather",
+			// 是否启用该组件
+			enable: true,
+			// 是否显示组件标题
+			showTitle: true,
+			// 组件位置
+			position: "top",
+			// 是否在文章详情页显示
+			showOnPostPage: true,
+		},
+		{
+			// 组件类型：时间天气组件
 			type: "stats",
 			// 是否启用该组件
 			enable: true,
@@ -298,6 +310,16 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 					limit: 2,
 				},
 			},
+		},
+		{
+			// 组件类型：站点统计组件
+			type: "timeWeather",
+			// 是否启用该组件
+			enable: true,
+			// 是否显示组件标题
+			showTitle: true,
+			// 是否在文章详情页显示
+			showOnPostPage: true,
 		},
 		{
 			// 组件类型：站点统计组件

@@ -1,0 +1,248 @@
+---
+import { Icon } from "astro-icon/components";
+import WidgetLayout from "@/components/common/WidgetLayout.astro";
+import type { WidgetComponentConfig } from "@/types/config";
+
+interface Props {
+	class?: string;
+	style?: string;
+	widgetConfig?: WidgetComponentConfig;
+}
+
+const { class: className, style, widgetConfig } = Astro.props;
+const showTitle = widgetConfig?.showTitle !== false;
+---
+
+<WidgetLayout
+	id="time-weather-widget"
+	name="此刻"
+	showTitle={showTitle}
+	class={className}
+	style={style}
+>
+	<div class="time-weather-card">
+		<div class="time-weather-clock" data-time-clock>--:--</div>
+		<div class="time-weather-date" data-time-date>星期 · 日期同步中</div>
+		<div class="time-weather-spacer"></div>
+		<div class="time-weather-line">
+			<Icon is:inline name="material-symbols:partly-cloudy-day-outline-rounded" />
+			<span data-visitor-weather>等待浏览器定位</span>
+		</div>
+		<div class="time-weather-line">
+			<Icon is:inline name="material-symbols:location-on-outline-rounded" />
+			<span>今日访问地：</span><span data-visitor-location>请求定位中</span>
+		</div>
+	</div>
+</WidgetLayout>
+
+<style>
+	.time-weather-card {
+		position: relative;
+		min-height: 10.5rem;
+		border-radius: 1.35rem;
+		padding: 1rem 1.05rem;
+		background:
+			radial-gradient(circle at 82% 8%, color-mix(in oklch, var(--primary) 18%, transparent), transparent 34%),
+			linear-gradient(135deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.12));
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		box-shadow:
+			0 12px 28px rgba(15, 12, 28, 0.08),
+			inset 0 1px 0 rgba(255, 255, 255, 0.34);
+		backdrop-filter: blur(12px) saturate(1.06);
+		-webkit-backdrop-filter: blur(12px) saturate(1.06);
+		overflow: hidden;
+	}
+
+	.time-weather-card::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 42%);
+	}
+
+	.time-weather-card > * {
+		position: relative;
+		z-index: 1;
+	}
+
+	.time-weather-clock {
+		font-size: 2.55rem;
+		line-height: 1;
+		font-weight: 800;
+		letter-spacing: -0.06em;
+		color: color-mix(in oklch, var(--primary) 62%, black);
+	}
+
+	.time-weather-date {
+		margin-top: 0.45rem;
+		font-size: 0.86rem;
+		font-weight: 600;
+		color: rgba(0, 0, 0, 0.54);
+	}
+
+	.time-weather-spacer {
+		height: 1.05rem;
+	}
+
+	.time-weather-line {
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+		margin-top: 0.45rem;
+		color: rgba(0, 0, 0, 0.62);
+		font-size: 0.88rem;
+		font-weight: 500;
+	}
+
+	.time-weather-line :global(svg) {
+		font-size: 1.1rem;
+		color: var(--primary);
+		flex: 0 0 auto;
+	}
+
+	:global(:root.dark) .time-weather-card {
+		background:
+			radial-gradient(circle at 82% 8%, color-mix(in oklch, var(--primary) 18%, transparent), transparent 34%),
+			linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.035));
+		border-color: rgba(255, 255, 255, 0.14);
+		box-shadow:
+			0 12px 28px rgba(0, 0, 0, 0.2),
+			inset 0 1px 0 rgba(255, 255, 255, 0.12);
+	}
+
+	:global(:root.dark) .time-weather-clock {
+		color: color-mix(in oklch, var(--primary) 64%, white);
+	}
+
+	:global(:root.dark) .time-weather-date,
+	:global(:root.dark) .time-weather-line {
+		color: rgba(255, 255, 255, 0.66);
+	}
+</style>
+
+<script>
+	(() => {
+		const clock = document.querySelector<HTMLElement>("[data-time-clock]");
+		const date = document.querySelector<HTMLElement>("[data-time-date]");
+		const location = document.querySelector<HTMLElement>("[data-visitor-location]");
+		const weather = document.querySelector<HTMLElement>("[data-visitor-weather]");
+
+		if (!clock || !date || !location || !weather) return;
+		const clockElement = clock;
+		const dateElement = date;
+		const locationElement = location;
+		const weatherElement = weather;
+
+		const weekdayMap = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+		const weatherCodeMap: Record<number, string> = {
+			0: "晴",
+			1: "大部晴朗",
+			2: "局部多云",
+			3: "阴",
+			45: "有雾",
+			48: "雾凇",
+			51: "小毛毛雨",
+			53: "毛毛雨",
+			55: "大毛毛雨",
+			61: "小雨",
+			63: "中雨",
+			65: "大雨",
+			71: "小雪",
+			73: "中雪",
+			75: "大雪",
+			80: "阵雨",
+			81: "强阵雨",
+			82: "暴阵雨",
+			95: "雷暴",
+		};
+
+		function updateTime() {
+			const now = new Date();
+			clockElement.textContent = now.toLocaleTimeString("zh-CN", {
+				hour: "2-digit",
+				minute: "2-digit",
+			});
+			dateElement.textContent = `${weekdayMap[now.getDay()]}  ${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, "0")}.${String(now.getDate()).padStart(2, "0")}`;
+		}
+
+		function getBrowserPosition(): Promise<GeolocationPosition> {
+			return new Promise((resolve, reject) => {
+				if (!navigator.geolocation) {
+					reject(new Error("geolocation unsupported"));
+					return;
+				}
+
+				navigator.geolocation.getCurrentPosition(resolve, reject, {
+					enableHighAccuracy: false,
+					timeout: 8000,
+					maximumAge: 30 * 60 * 1000,
+				});
+			});
+		}
+
+		async function getLocationName(latitude: number, longitude: number) {
+			try {
+				const reverseUrl = new URL("https://api.bigdatacloud.net/data/reverse-geocode-client");
+				reverseUrl.searchParams.set("latitude", String(latitude));
+				reverseUrl.searchParams.set("longitude", String(longitude));
+				reverseUrl.searchParams.set("localityLanguage", "zh");
+
+				const response = await fetch(reverseUrl, { cache: "no-store" });
+				if (!response.ok) throw new Error("reverse geocode failed");
+				const data = await response.json();
+				const country = data.countryName || "";
+				const city = data.city || data.locality || data.principalSubdivision || "";
+				if (country && city) return `${country} · ${city}`;
+				return country || city || `${latitude.toFixed(2)}, ${longitude.toFixed(2)}`;
+			} catch {
+				return `${latitude.toFixed(2)}, ${longitude.toFixed(2)}`;
+			}
+		}
+
+		async function updateVisitorWeather() {
+			try {
+				locationElement.textContent = "等待授权";
+				weatherElement.textContent = "等待浏览器定位";
+				const position = await getBrowserPosition();
+				const latitude = position.coords.latitude;
+				const longitude = position.coords.longitude;
+
+				if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+					locationElement.textContent = "定位不可用";
+					weatherElement.textContent = "天气暂不可用";
+					return;
+				}
+
+				locationElement.textContent = await getLocationName(latitude, longitude);
+
+				const weatherUrl = new URL("https://api.open-meteo.com/v1/forecast");
+				weatherUrl.searchParams.set("latitude", String(latitude));
+				weatherUrl.searchParams.set("longitude", String(longitude));
+				weatherUrl.searchParams.set("current", "temperature_2m,weather_code");
+				weatherUrl.searchParams.set("timezone", "auto");
+
+				const weatherResponse = await fetch(weatherUrl, { cache: "no-store" });
+				if (!weatherResponse.ok) throw new Error("weather failed");
+				const weatherData = await weatherResponse.json();
+				const current = weatherData.current;
+				const temperature = Math.round(Number(current?.temperature_2m));
+				const code = Number(current?.weather_code);
+				const weatherText = weatherCodeMap[code] || "天气";
+
+				if (Number.isFinite(temperature)) {
+					weatherElement.textContent = `${weatherText} · ${temperature}℃`;
+				} else {
+					weatherElement.textContent = "天气暂不可用";
+				}
+			} catch {
+				locationElement.textContent = "未授权定位";
+				weatherElement.textContent = "天气暂不可用";
+			}
+		}
+
+		updateTime();
+		window.setInterval(updateTime, 1000);
+		updateVisitorWeather();
+	})();
+</script>
