@@ -508,26 +508,37 @@
 
 	let globalSakuraManager: SakuraManagerLike | null = null;
 
+	function getResponsiveSakuraConfig(config: SakuraConfig): SakuraConfig {
+		if (window.innerWidth >= 1024) return config;
+
+		return {
+			...config,
+			sakuraNum: Math.max(1, Math.round(config.sakuraNum / 2)),
+		};
+	}
+
 	function initSakura(cfg: SakuraConfig) {
+		const responsiveCfg = getResponsiveSakuraConfig(cfg);
+
 		if (globalSakuraManager) {
 			// 已存在管理器,更新配置(先停再启)
 			const wasRunning = globalSakuraManager.isRunning;
 			if (wasRunning) {
 				globalSakuraManager.stop();
 			}
-			globalSakuraManager.config = cfg;
-			if (cfg.enable) {
+			globalSakuraManager.config = responsiveCfg;
+			if (responsiveCfg.enable) {
 				void globalSakuraManager.init();
 			}
 		} else {
 			// 首次创建:根据特性检测选择实现
 			if (supportsWorkerSakura()) {
-				globalSakuraManager = new WorkerSakuraManager(cfg);
+				globalSakuraManager = new WorkerSakuraManager(responsiveCfg);
 			} else {
-				globalSakuraManager = new MainThreadSakuraManager(cfg);
+				globalSakuraManager = new MainThreadSakuraManager(responsiveCfg);
 			}
 			window.sakuraManager = globalSakuraManager;
-			if (cfg.enable) {
+			if (responsiveCfg.enable) {
 				void globalSakuraManager.init();
 			}
 		}

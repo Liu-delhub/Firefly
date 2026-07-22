@@ -627,6 +627,7 @@ function updateNavbarTransparency(mode: WALLPAPER_MODE) {
 	let transparentMode: string;
 	let enableBlur: boolean;
 	let blurAmount: number;
+	const isMobile = window.innerWidth < 1024;
 
 	// 根据当前壁纸模式设置导航栏透明模式和模糊效果
 	if (mode === WALLPAPER_OVERLAY) {
@@ -656,7 +657,10 @@ function updateNavbarTransparency(mode: WALLPAPER_MODE) {
 	// 更新导航栏的透明模式属性
 	navbar.setAttribute("data-transparent-mode", transparentMode);
 	navbar.setAttribute("data-enable-blur", String(enableBlur));
-	navbar.style.setProperty("--navbar-glass-blur", `${blurAmount}px`);
+	navbar.style.setProperty(
+		"--navbar-glass-blur",
+		`${isMobile && enableBlur ? 70 : blurAmount}px`,
+	);
 
 	// 移除现有的透明模式类
 	navbar.classList.remove(
