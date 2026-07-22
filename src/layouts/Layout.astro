@@ -587,6 +587,34 @@ const siteLang = lang.replace("_", "-");
 
     <!-- Fancybox Manager -->
     <FancyboxManager />
+
+    <script is:inline>
+      (() => {
+        let ticking = false;
+
+        const updateMobileBannerScrollState = () => {
+          const threshold = Math.max(80, window.innerHeight * 0.18);
+          document.documentElement.classList.toggle(
+            "mobile-banner-scrolled",
+            window.innerWidth < 1024 && window.scrollY > threshold,
+          );
+          ticking = false;
+        };
+
+        const requestUpdate = () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(updateMobileBannerScrollState);
+        };
+
+        window.addEventListener("scroll", requestUpdate, { passive: true });
+        window.addEventListener("resize", requestUpdate);
+        document.addEventListener("astro:page-load", requestUpdate);
+        document.addEventListener("swup:contentReplaced", requestUpdate);
+        document.addEventListener("swup:page:view", requestUpdate);
+        requestUpdate();
+      })();
+    </script>
   </body>
 </html>
 

@@ -212,4 +212,19 @@
     .banner-post-title::after {
         width: clamp(1.2rem, 7vw, 3rem);
     }
+
+    .banner-post-meta-list {
+        padding: 0.32rem 0.72rem;
+        background: rgba(18, 14, 32, 0.34);
+        border-color: rgba(255, 255, 255, 0.22);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        color: rgba(255, 255, 255, 0.96);
+        text-shadow:
+            0 1px 3px rgba(0, 0, 0, 0.72),
+            0 0 8px rgba(255, 230, 246, 0.18);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.16),
+            0 4px 14px rgba(0, 0, 0, 0.14);
+    }
 }

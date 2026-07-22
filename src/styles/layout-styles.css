@@ -760,11 +760,31 @@ html[data-wallpaper-mode="fullscreen"] body:not(.sticky-navbar) #top-row {
     opacity: 1 !important;
 }
 
-/* Fullscreen 模式隐藏 overlay 专属的半透明效果 */
-#wallpaper-wrapper.wallpaper-fullscreen .banner-home-text-overlay,
-#wallpaper-wrapper.wallpaper-fullscreen .banner-page-title-overlay,
-#wallpaper-wrapper.wallpaper-fullscreen .banner-post-meta-overlay {
-    display: flex !important;
+/* Fullscreen 模式横幅文字：只在桌面端强制显示，避免覆盖移动端 hidden/lg:flex 规则 */
+@media (min-width: 1024px) {
+    #wallpaper-wrapper.wallpaper-fullscreen .banner-home-text-overlay,
+    #wallpaper-wrapper.wallpaper-fullscreen .banner-page-title-overlay,
+    #wallpaper-wrapper.wallpaper-fullscreen .banner-post-meta-overlay {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 1023px) {
+    #wallpaper-wrapper.wallpaper-fullscreen .banner-page-title-overlay,
+    #wallpaper-wrapper.wallpaper-fullscreen .banner-post-meta-overlay {
+        display: none !important;
+    }
+
+    html.mobile-banner-scrolled #wallpaper-wrapper.wallpaper-fullscreen .banner-home-text-overlay {
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transform: translateY(-1rem) scale(0.98);
+        pointer-events: none !important;
+        transition:
+            opacity 0.26s ease,
+            visibility 0.26s ease,
+            transform 0.26s ease !important;
+    }
 }
 
 /* Fullscreen 模式下非首页隐藏主页标题文字（Swup 页面切换时通过 hidden 类控制） */
